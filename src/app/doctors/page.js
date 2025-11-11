@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { User, Clock, Award, BookOpen, Users, ArrowRight } from 'lucide-react';
+import { User, Clock, Award, BookOpen, ArrowRight } from 'lucide-react';
 import { getDoctors } from '@/lib/firebase/doctors';
 import Link from 'next/link';
 import OtherHeroSection from '@/components/OtherHeroSection';
@@ -9,10 +9,12 @@ import OtherHeroSection from '@/components/OtherHeroSection';
 // Skeleton Card Component
 const DoctorCardSkeleton = () => (
   <div className="bg-white rounded-xl shadow-lg overflow-hidden h-full animate-pulse">
-    <div className="relative h-64 bg-gradient-to-br from-gray-200 to-gray-300">
-      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-gray-400/70 to-transparent p-4">
-        <div className="h-8 bg-gray-300 rounded w-3/4 mb-2"></div>
-        <div className="h-4 bg-gray-300 rounded w-1/2"></div>
+    <div className="relative w-full" style={{ paddingBottom: '125%' }}>
+      <div className="absolute inset-0 bg-gradient-to-br from-gray-200 to-gray-300">
+        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-gray-400/70 to-transparent p-4">
+          <div className="h-8 bg-gray-300 rounded w-3/4 mb-2"></div>
+          <div className="h-4 bg-gray-300 rounded w-1/2"></div>
+        </div>
       </div>
     </div>
 
@@ -73,7 +75,7 @@ export default function AllDoctorsPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
-      {/* Hero Section - Always visible */}
+      {/* Hero Section */}
       <OtherHeroSection title={'Our Doctors'} imageUrl={'/images/hero.jpg'} />
 
       {/* Doctors Grid */}
@@ -116,16 +118,17 @@ export default function AllDoctorsPage() {
                   href={`/doctors/${doctor.slug}`}
                   className="block"
                 >
-                  <div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 cursor-pointer h-full">
-                    <div className="relative h-64 bg-gradient-to-br from-blue-100 to-blue-200">
+                  <div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 cursor-pointer h-full flex flex-col">
+                    {/* Image Container with 4:5 Aspect Ratio */}
+                    <div className="relative w-full bg-gradient-to-br from-blue-100 to-blue-200" style={{ paddingBottom: '125%' }}>
                       {doctor.imageUrl ? (
                         <img
                           src={doctor.imageUrl}
                           alt={doctor.name}
-                          className="w-full h-full object-cover"
+                          className="absolute inset-0 w-full h-full object-cover"
                         />
                       ) : (
-                        <div className="w-full h-full flex items-center justify-center">
+                        <div className="absolute inset-0 flex items-center justify-center">
                           <User className="w-24 h-24 text-blue-400" />
                         </div>
                       )}
@@ -135,11 +138,12 @@ export default function AllDoctorsPage() {
                       </div>
                     </div>
 
-                    <div className="p-6">
-                      <div className="space-y-3 mb-4">
+                    {/* Content Container */}
+                    <div className="p-6 flex-1 flex flex-col">
+                      <div className="space-y-3 mb-4 flex-1">
                         <div className="flex items-start gap-2">
                           <BookOpen className="w-5 h-5 text-blue-600 mt-1 flex-shrink-0" />
-                          <div className="flex-1">
+                          <div className="flex-1 min-w-0">
                             <p className="text-sm text-gray-600">College</p>
                             <p className="font-medium text-gray-800 line-clamp-2">{doctor.college}</p>
                           </div>
@@ -147,7 +151,7 @@ export default function AllDoctorsPage() {
 
                         <div className="flex items-start gap-2">
                           <Award className="w-5 h-5 text-blue-600 mt-1 flex-shrink-0" />
-                          <div className="flex-1">
+                          <div className="flex-1 min-w-0">
                             <p className="text-sm text-gray-600">Experience</p>
                             <p className="font-medium text-gray-800">{doctor.experience}</p>
                           </div>
@@ -155,7 +159,7 @@ export default function AllDoctorsPage() {
 
                         <div className="flex items-start gap-2">
                           <Clock className="w-5 h-5 text-blue-600 mt-1 flex-shrink-0" />
-                          <div className="flex-1">
+                          <div className="flex-1 min-w-0">
                             <p className="text-sm text-gray-600">Expertise</p>
                             <p className="font-medium text-gray-800 line-clamp-2">{doctor.expertise}</p>
                           </div>

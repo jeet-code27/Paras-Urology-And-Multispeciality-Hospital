@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { auth } from '@/lib/firebase/config';
-import { Image, Users, Activity, Calendar } from 'lucide-react';
+import { Image, Users, } from 'lucide-react';
 import Link from 'next/link';
 
 export default function AdminDashboard() {
