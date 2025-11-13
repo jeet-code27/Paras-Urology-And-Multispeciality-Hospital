@@ -5,12 +5,13 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import { User, Loader2, ChevronLeft, ChevronRight } from 'lucide-react';
 import { getDoctors } from '@/lib/firebase/doctors';
+import { motion } from 'framer-motion';
+import Link from 'next/link';
 
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import Link from 'next/link';
 
 export default function DoctorsSlider() {
   const [doctors, setDoctors] = useState([]);
@@ -34,11 +35,9 @@ export default function DoctorsSlider() {
   if (loading) {
     return (
       <div className="py-16 bg-gradient-to-b from-blue-50 to-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center">
-            <Loader2 className="w-12 h-12 text-blue-600 animate-spin mx-auto mb-4" />
-            <p className="text-gray-600">Loading doctors...</p>
-          </div>
+        <div className="container mx-auto px-4 text-center">
+          <Loader2 className="w-12 h-12 text-blue-600 animate-spin mx-auto mb-4" />
+          <p className="text-gray-600">Loading doctors...</p>
         </div>
       </div>
     );
@@ -47,29 +46,45 @@ export default function DoctorsSlider() {
   if (doctors.length === 0) {
     return (
       <div className="py-16 bg-gradient-to-b from-blue-50 to-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center">
-            <User className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-            <p className="text-xl text-gray-500">No doctors available at the moment</p>
-          </div>
+        <div className="container mx-auto px-4 text-center">
+          <User className="w-16 h-16 text-gray-300 mx-auto mb-4" />
+          <p className="text-xl text-gray-500">No doctors available at the moment</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="py-16 bg-gradient-to-b from-blue-50 to-white">
+    <section className="py-16 bg-gradient-to-b from-blue-50 to-white overflow-hidden">
       <div className="container mx-auto px-4">
         {/* Header */}
-        <div className="text-center mb-12">
+        <motion.div
+          className="text-center mb-12"
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: 'easeOut' }}
+          viewport={{ once: true }}
+        >
           <h2 className="text-4xl md:text-5xl font-bold text-blue-900 mb-4">
             Meet Doctors from Top Hospital of Ajmer
           </h2>
-          <div className="w-24 h-1 bg-blue-600 mx-auto"></div>
-        </div>
+          <motion.div
+            className="w-24 h-1 bg-blue-600 mx-auto"
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            transition={{ delay: 0.3, duration: 0.6, ease: 'easeOut' }}
+            viewport={{ once: true }}
+          />
+        </motion.div>
 
         {/* Slider */}
-        <div className="relative px-12">
+        <motion.div
+          className="relative px-12"
+          initial={{ opacity: 0, y: 60 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, ease: 'easeOut' }}
+          viewport={{ once: true }}
+        >
           <Swiper
             modules={[Navigation, Pagination, Autoplay]}
             spaceBetween={30}
@@ -88,59 +103,51 @@ export default function DoctorsSlider() {
             }}
             loop={doctors.length > 3}
             breakpoints={{
-              640: {
-                slidesPerView: 2,
-              },
-              1024: {
-                slidesPerView: 3,
-              },
-              1280: {
-                slidesPerView: 4,
-              },
+              640: { slidesPerView: 2 },
+              1024: { slidesPerView: 3 },
+              1280: { slidesPerView: 4 },
             }}
             className="doctors-swiper"
           >
-            {doctors.map((doctor) => (
+            {doctors.map((doctor, i) => (
               <SwiperSlide key={doctor.id}>
-                <div className="bg-white rounded-lg shadow-lg overflow-hidden border-t-4 border-blue-600 hover:shadow-xl transition-shadow duration-300">
-                  <Link
-                   href={`/doctors/${doctor.slug}`}
-                  className="block"
-                  >
+                <motion.div
+                  className="bg-white rounded-lg shadow-lg overflow-hidden border-t-4 border-blue-600 hover:shadow-xl transition-shadow duration-300"
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.6, delay: i * 0.1, ease: 'easeOut' }}
+                  viewport={{ once: true }}
+                >
+                  <Link href={`/doctors/${doctor.slug}`} className="block">
+                    {/* Doctor Image */}
+                    <div className="relative h-80 bg-gradient-to-br from-blue-100 to-blue-50">
+                      {doctor.imageUrl ? (
+                        <img
+                          src={doctor.imageUrl}
+                          alt={doctor.name}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center">
+                          <User className="w-32 h-32 text-blue-300" />
+                        </div>
+                      )}
+                    </div>
 
-                  
-                  
-                  {/* Doctor Image */}
-                  <div className="relative h-80 bg-gradient-to-br from-blue-100 to-blue-50">
-                    {doctor.imageUrl ? (
-                      <img
-                        src={doctor.imageUrl}
-                        alt={doctor.name}
-                        className="w-full h-full object-cover"
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center">
-                        <User className="w-32 h-32 text-blue-300" />
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Doctor Info */}
-                  <div className="p-6 text-center">
-                    <h3 className="text-xl font-bold text-gray-800 mb-2">
-                      {doctor.name}
-                    </h3>
-                    <p className="text-blue-600 font-medium text-sm mb-3">
-                      {doctor.education}
-                    </p>
-                    {doctor.expertise && (
-                      <p className="text-gray-600 text-sm line-clamp-2">
-                        {doctor.expertise}
+                    {/* Doctor Info */}
+                    <div className="p-6 text-center">
+                      <h3 className="text-xl font-bold text-gray-800 mb-2">{doctor.name}</h3>
+                      <p className="text-blue-600 font-medium text-sm mb-3">
+                        {doctor.education}
                       </p>
-                    )}
-                  </div>
+                      {doctor.expertise && (
+                        <p className="text-gray-600 text-sm line-clamp-2">
+                          {doctor.expertise}
+                        </p>
+                      )}
+                    </div>
                   </Link>
-                </div>
+                </motion.div>
               </SwiperSlide>
             ))}
           </Swiper>
@@ -155,9 +162,10 @@ export default function DoctorsSlider() {
 
           {/* Custom Pagination */}
           <div className="swiper-pagination-custom mt-8 flex justify-center gap-2"></div>
-        </div>
+        </motion.div>
       </div>
 
+      {/* Pagination Styling */}
       <style jsx global>{`
         .swiper-pagination-custom .swiper-pagination-bullet {
           width: 12px;
@@ -166,7 +174,7 @@ export default function DoctorsSlider() {
           opacity: 1;
           transition: all 0.3s;
         }
-        
+
         .swiper-pagination-custom .swiper-pagination-bullet-active {
           width: 32px;
           border-radius: 6px;
@@ -177,6 +185,6 @@ export default function DoctorsSlider() {
           padding-bottom: 20px;
         }
       `}</style>
-    </div>
+    </section>
   );
 }

@@ -26,7 +26,7 @@ export default function RootLayout({ children }) {
       >
         <Navbar/>
         {/* Add padding to prevent content from being hidden under fixed navbar */}
-        <div className="pt-[52px] md:pt-[88px]">
+        <div className="pt-[52px] md:pt-[88px] text-black placeholder-black">
           {children}
         </div>
           <Footer/>

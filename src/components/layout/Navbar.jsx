@@ -1,7 +1,16 @@
-'use client';
-import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
-import { ChevronDown, Menu, X, Phone, Mail, Facebook, Instagram, Youtube } from 'lucide-react';
+"use client";
+import React, { useState, useEffect } from "react";
+import Link from "next/link";
+import {
+  ChevronDown,
+  Menu,
+  X,
+  Phone,
+  Mail,
+  Facebook,
+  Instagram,
+  Youtube,
+} from "lucide-react";
 
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -11,12 +20,12 @@ const Navigation = () => {
   // Close menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (isMenuOpen && !event.target.closest('nav')) {
+      if (isMenuOpen && !event.target.closest("nav")) {
         setIsMenuOpen(false);
       }
     };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isMenuOpen]);
 
   // Handle scroll effect
@@ -24,53 +33,72 @@ const Navigation = () => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 10);
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   // Prevent body scroll when mobile menu is open
   useEffect(() => {
     if (isMenuOpen) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
     }
     return () => {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
     };
   }, [isMenuOpen]);
 
   const closeMobileMenu = () => {
     setIsMenuOpen(false);
-   
   };
 
   return (
     <nav className="w-full fixed top-0 left-0 z-50">
       {/* Top Bar - Hidden on mobile */}
-      <div className="bg-blue-700 text-white py-2 px-4 hidden md:block">
+      <div className="bg-[#002b4a] text-white py-2 px-4 hidden md:block">
         <div className="max-w-7xl mx-auto flex justify-between items-center text-xs lg:text-sm">
           <div className="flex gap-3 lg:gap-6">
-            <a href="tel:+919521894263" className="flex items-center gap-1.5 hover:text-blue-200 transition-colors">
+            <a
+              href="tel:+919521894263"
+              className="flex items-center gap-1.5 hover:text-blue-200 transition-colors"
+            >
               <Phone size={14} className="lg:w-4 lg:h-4" />
               <span className="hidden lg:inline">+91-9521894263</span>
               <span className="lg:hidden">Call Us</span>
             </a>
-            <a href="mailto:relationship@parashospital.com" className="flex items-center gap-1.5 hover:text-blue-200 transition-colors">
+            <a
+              href="mailto:relationship@parashospital.com"
+              className="flex items-center gap-1.5 hover:text-blue-200 transition-colors"
+            >
               <Mail size={14} className="lg:w-4 lg:h-4" />
-              <span className="hidden xl:inline">relationship@parashospital.com</span>
+              <span className="hidden xl:inline">
+                relationship@parashospital.com
+              </span>
               <span className="xl:hidden">Email</span>
             </a>
           </div>
-          
+
           <div className="flex items-center gap-3 lg:gap-4">
-            <a href="#" className="hover:text-blue-200 transition-colors" aria-label="Facebook">
+            <a
+              href="#"
+              className="hover:text-blue-200 transition-colors"
+              aria-label="Facebook"
+            >
               <Facebook size={16} className="lg:w-[18px] lg:h-[18px]" />
             </a>
-            <a href="#" className="hover:text-blue-200 transition-colors" aria-label="Instagram">
+            <a
+              href="#"
+              className="hover:text-blue-200 transition-colors"
+              aria-label="Instagram"
+            >
               <Instagram size={16} className="lg:w-[18px] lg:h-[18px]" />
             </a>
-            <a href="#" className="hover:text-blue-200 transition-colors" aria-label="Youtube">
+            <a
+              href="#"
+              className="hover:text-blue-200 transition-colors"
+              aria-label="Youtube"
+            >
               <Youtube size={16} className="lg:w-[18px] lg:h-[18px]" />
             </a>
           </div>
@@ -78,50 +106,80 @@ const Navigation = () => {
       </div>
 
       {/* Main Navigation */}
-      <div className={`bg-white transition-shadow duration-300 ${scrolled ? 'shadow-lg' : 'shadow-md'}`}>
+      <div
+        className={`bg-white transition-shadow duration-300 ${
+          scrolled ? "shadow-lg" : "shadow-md"
+        }`}
+      >
         <div className="max-w-8xl mx-auto px-4">
           <div className="flex justify-between items-center py-2.5 md:py-3">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2 flex-shrink-0">
-              <img 
-                src="/images/logo.jpg" 
-                alt="Hospital Logo" 
+              <img
+                src="/images/logo.jpg"
+                alt="Hospital Logo"
                 className="h-10 md:h-12 lg:h-14 w-auto object-contain"
               />
             </Link>
 
             {/* Desktop Menu */}
             <div className="hidden lg:flex items-center gap-4 xl:gap-6">
-              <Link href="/" className="text-gray-700 hover:text-blue-700 font-medium transition-colors text-sm xl:text-base">
+              <Link
+                href="/"
+                className="text-gray-700 hover:text-blue-700 font-medium transition-colors text-sm xl:text-base"
+              >
                 Home
               </Link>
-              <Link href="/about" className="text-gray-700 hover:text-blue-700 font-medium transition-colors text-sm xl:text-base">
+              <Link
+                href="/about"
+                className="text-gray-700 hover:text-blue-700 font-medium transition-colors text-sm xl:text-base"
+              >
                 About Us
               </Link>
-              <Link href="/doctors" className="text-gray-700 hover:text-blue-700 font-medium transition-colors text-sm xl:text-base">
+              <Link
+                href="/doctors"
+                className="text-gray-700 hover:text-blue-700 font-medium transition-colors text-sm xl:text-base"
+              >
                 Our Doctors
               </Link>
-              <Link href="/departments" className="text-gray-700 hover:text-blue-700 font-medium transition-colors text-sm xl:text-base">
+              <Link
+                href="/departments"
+                className="text-gray-700 hover:text-blue-700 font-medium transition-colors text-sm xl:text-base"
+              >
                 Departments
               </Link>
-              <Link href="/services" className="text-gray-700 hover:text-blue-700 font-medium transition-colors text-sm xl:text-base">
+              <Link
+                href="/services"
+                className="text-gray-700 hover:text-blue-700 font-medium transition-colors text-sm xl:text-base"
+              >
                 Services
               </Link>
-              <Link href="/our-empanelment" className="text-gray-700 hover:text-blue-700 font-medium transition-colors text-sm xl:text-base">
+              <Link
+                href="/our-empanelment"
+                className="text-gray-700 hover:text-blue-700 font-medium transition-colors text-sm xl:text-base"
+              >
                 Empanelments
               </Link>
-             
-              
-              <Link href="/gallery" className="text-gray-700 hover:text-blue-700 font-medium transition-colors text-sm xl:text-base">
+
+              <Link
+                href="/gallery"
+                className="text-gray-700 hover:text-blue-700 font-medium transition-colors text-sm xl:text-base"
+              >
                 Gallery
               </Link>
 
-             
               <Link
                 href="/book-appointment"
-                className="bg-blue-700 text-white px-4 xl:px-6 py-2 rounded-lg hover:bg-blue-800 font-medium transition-all hover:shadow-lg text-sm xl:text-base whitespace-nowrap"
+                className="relative overflow-hidden bg-blue-700 text-white px-4 xl:px-6 py-2 rounded-lg font-medium text-sm xl:text-base whitespace-nowrap 
+  transition-all duration-300 hover:shadow-lg"
               >
-                Book Appointment
+                <span className="relative z-10">Book Appointment</span>
+
+                {/* Infinite shining effect */}
+                <span
+                  className="absolute inset-0 h-30  bg-gradient-to-r from-transparent rotate-0 via-white/40 to-transparent 
+    animate-[shine_0.9s_linear_infinite]"
+                ></span>
               </Link>
             </div>
 
@@ -145,13 +203,18 @@ const Navigation = () => {
 
           {/* Mobile Menu Overlay */}
           {isMenuOpen && (
-            <div className="fixed inset-0 bg-black/50 z-40 lg:hidden" onClick={closeMobileMenu} />
+            <div
+              className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+              onClick={closeMobileMenu}
+            />
           )}
 
           {/* Mobile Menu Drawer */}
-          <div className={`fixed top-0 right-0 h-full w-[280px] sm:w-[320px] bg-white shadow-2xl z-50 transform transition-transform duration-300 ease-in-out lg:hidden ${
-            isMenuOpen ? 'translate-x-0' : 'translate-x-full'
-          }`}>
+          <div
+            className={`fixed top-0 right-0 h-full w-[280px] sm:w-[320px] bg-white shadow-2xl z-50 transform transition-transform duration-300 ease-in-out lg:hidden ${
+              isMenuOpen ? "translate-x-0" : "translate-x-full"
+            }`}
+          >
             <div className="flex flex-col h-full">
               {/* Mobile Menu Header */}
               <div className="flex justify-between items-center p-4 border-b bg-blue-700 text-white">
@@ -168,53 +231,51 @@ const Navigation = () => {
               {/* Mobile Menu Content */}
               <div className="flex-1 overflow-y-auto overscroll-contain">
                 <div className="flex flex-col p-4 space-y-1">
-                  <Link 
-                    href="/" 
+                  <Link
+                    href="/"
                     className="text-gray-700 hover:text-blue-700 hover:bg-blue-50 font-medium py-3 px-4 rounded-lg transition-all"
                     onClick={closeMobileMenu}
                   >
                     Home
                   </Link>
-                  <Link 
-                    href="/about" 
+                  <Link
+                    href="/about"
                     className="text-gray-700 hover:text-blue-700 hover:bg-blue-50 font-medium py-3 px-4 rounded-lg transition-all"
                     onClick={closeMobileMenu}
                   >
                     About Us
                   </Link>
-                  <Link 
-                    href="/doctors" 
+                  <Link
+                    href="/doctors"
                     className="text-gray-700 hover:text-blue-700 hover:bg-blue-50 font-medium py-3 px-4 rounded-lg transition-all"
                     onClick={closeMobileMenu}
                   >
                     Our Doctors
                   </Link>
-                  <Link 
-                    href="/departments" 
+                  <Link
+                    href="/departments"
                     className="text-gray-700 hover:text-blue-700 hover:bg-blue-50 font-medium py-3 px-4 rounded-lg transition-all"
                     onClick={closeMobileMenu}
                   >
                     Departments
                   </Link>
-                  <Link 
-                    href="/services" 
+                  <Link
+                    href="/services"
                     className="text-gray-700 hover:text-blue-700 hover:bg-blue-50 font-medium py-3 px-4 rounded-lg transition-all"
                     onClick={closeMobileMenu}
                   >
                     Services
                   </Link>
-                  <Link 
-                    href="/empanelments" 
+                  <Link
+                    href="/empanelments"
                     className="text-gray-700 hover:text-blue-700 hover:bg-blue-50 font-medium py-3 px-4 rounded-lg transition-all"
                     onClick={closeMobileMenu}
                   >
                     Our Empanelments
                   </Link>
-                 
-                  
-                 
-                  <Link 
-                    href="/gallery" 
+
+                  <Link
+                    href="/gallery"
                     className="text-gray-700 hover:text-blue-700 hover:bg-blue-50 font-medium py-3 px-4 rounded-lg transition-all"
                     onClick={closeMobileMenu}
                   >
@@ -226,23 +287,43 @@ const Navigation = () => {
               {/* Mobile Menu Footer */}
               <div className="p-4 border-t bg-gray-50">
                 <div className="flex flex-col gap-3 mb-4">
-                  <a href="tel:+919521894263" className="flex items-center gap-2 text-gray-700 hover:text-blue-700 transition-colors">
+                  <a
+                    href="tel:+919521894263"
+                    className="flex items-center gap-2 text-gray-700 hover:text-blue-700 transition-colors"
+                  >
                     <Phone size={18} />
                     <span className="text-sm">+91-9521894263</span>
                   </a>
-                  <a href="mailto:relationship@parashospital.com" className="flex items-center gap-2 text-gray-700 hover:text-blue-700 transition-colors">
+                  <a
+                    href="mailto:relationship@parashospital.com"
+                    className="flex items-center gap-2 text-gray-700 hover:text-blue-700 transition-colors"
+                  >
                     <Mail size={18} />
-                    <span className="text-sm">relationship@parashospital.com</span>
+                    <span className="text-sm">
+                      relationship@parashospital.com
+                    </span>
                   </a>
                 </div>
                 <div className="flex items-center justify-center gap-4 mb-3">
-                  <a href="#" className="text-blue-700 hover:text-blue-900 transition-colors" aria-label="Facebook">
+                  <a
+                    href="#"
+                    className="text-blue-700 hover:text-blue-900 transition-colors"
+                    aria-label="Facebook"
+                  >
                     <Facebook size={20} />
                   </a>
-                  <a href="#" className="text-blue-700 hover:text-blue-900 transition-colors" aria-label="Instagram">
+                  <a
+                    href="#"
+                    className="text-blue-700 hover:text-blue-900 transition-colors"
+                    aria-label="Instagram"
+                  >
                     <Instagram size={20} />
                   </a>
-                  <a href="#" className="text-blue-700 hover:text-blue-900 transition-colors" aria-label="Youtube">
+                  <a
+                    href="#"
+                    className="text-blue-700 hover:text-blue-900 transition-colors"
+                    aria-label="Youtube"
+                  >
                     <Youtube size={20} />
                   </a>
                 </div>
