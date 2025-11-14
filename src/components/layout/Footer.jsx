@@ -18,19 +18,17 @@ export default function Footer() {
   const quickLinks = [
     { name: "Home", href: "/" },
     { name: "About Us", href: "/about" },
-    { name: "Services", href: "/services" },
-    { name: "Blogs", href: "/blogs" },
-    { name: "Career", href: "/career" },
-    { name: "News Media", href: "/news" },
+    { name: "Our Doctors", href: "/doctors" },
+    { name: "Departments", href: "/departments" },
+    { name: "Empanelments", href: "/our-empanelment" },
     { name: "Contact Us", href: "/contact" },
-    { name: "Photo Gallery", href: "/gallery/photos" },
-    { name: "Video Gallery", href: "/gallery/videos" },
+    { name: "Gallery", href: "/gallery" },
   ];
 
   const socialLinks = [
-    { icon: Facebook, href: "https://facebook.com", label: "Facebook" },
+    { icon: Facebook, href: "https://www.facebook.com/PUMHAJMER/", label: "Facebook" },
     { icon: Instagram, href: "https://instagram.com", label: "Instagram" },
-    { icon: Youtube, href: "https://youtube.com", label: "YouTube" },
+    { icon: Youtube, href: "https://www.youtube.com/channel/UC3Oq_C_ae5qQqiflY0h30Kw", label: "YouTube" },
     { icon: Twitter, href: "https://twitter.com", label: "Twitter" },
   ];
 
@@ -44,8 +42,8 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 lg:gap-16">
           {/* Company Info */}
           <div>
-            <div className="bg-white/10 backdrop-blur-md p-4 rounded-xl w-fit mb-6">
-              <div className="relative w-48 h-16">
+            <div className="bg-white backdrop-blur-md p-4 rounded-xl w-fit mb-6">
+              <div className="relative w-60 h-16">
                 <Image
                   src="/images/logo.jpg"
                   alt="Paras Hospital Logo"
@@ -56,9 +54,7 @@ export default function Footer() {
             </div>
 
             <p className="text-blue-100 text-sm leading-relaxed">
-              At Paras Hospital, we’ve been committed to exceptional healthcare
-              since 2000. Our multi-specialty tertiary care hospital combines
-              world-class medical technology with compassion and excellence.
+              At Paras Urology and Multispeciality Hospital, We are committed to provide high-quality medical services in the field of different branches of medicine. We focus on prompt diagnosis, standardized medical care with advanced medical technology, and efficient staff leading to a happy and healthy discharge to home.
             </p>
           </div>
 
@@ -109,7 +105,7 @@ export default function Footer() {
               <div className="flex items-start gap-3 text-blue-100">
                 <MapPin className="w-5 h-5 mt-0.5 text-yellow-400" />
                 <span className="text-sm">
-                  Calgiri Road, Malviya Nagar, Jaipur, Rajasthan - 302017
+                  C BLOCK, Pushkar Rd, Haribhau Upadhyay Nagar, Ajmer, Rajasthan 305001
                 </span>
               </div>
 

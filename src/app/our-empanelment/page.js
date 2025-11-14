@@ -201,7 +201,7 @@ export default function EmpanelmentsPage() {
         )}
 
         {/* Info Section */}
-        {!loading && empanelments.length > 0 && (
+        {/* {!loading && empanelments.length > 0 && (
           <motion.div
             className="mt-16 bg-gradient-to-r from-blue-600 to-blue-800 text-white rounded-xl p-8 md:p-12"
             variants={fadeInUp}
@@ -226,11 +226,11 @@ export default function EmpanelmentsPage() {
               </div>
             </div>
           </motion.div>
-        )}
+        )} */}
       </div>
 
       {/* Trust Indicators */}
-      {!loading && empanelments.length > 0 && (
+      {/* {!loading && empanelments.length > 0 && (
         <motion.div
           className="bg-gray-100 py-16"
           variants={fadeInUp}
@@ -261,7 +261,7 @@ export default function EmpanelmentsPage() {
             </div>
           </div>
         </motion.div>
-      )}
+      )} */}
 
       {/* Lightbox Modal */}
       {lightboxImage && (

@@ -1,4 +1,5 @@
 import AboutSection from "@/components/HomePage/AboutSection";
+import DepartmentsSlider from "@/components/HomePage/DepartmentsSlider";
 import DoctorsSlider from "@/components/HomePage/DoctorSlider";
 import DoctorsProfile from "@/components/HomePage/DoctorsProfile";
 import EmpanelmentsSlider from "@/components/HomePage/EmpanelmentsSlider";
@@ -14,6 +15,7 @@ export default function Home() {
     <HeroSection />
     <StatsSection/>
     <AboutSection/>
+    <DepartmentsSlider/>
     <DoctorsSlider/>
     <EmpanelmentsSlider/>
     <GallerySlider/>

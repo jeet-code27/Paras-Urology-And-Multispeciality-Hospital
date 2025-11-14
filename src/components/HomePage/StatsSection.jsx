@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import { Package, MessageSquare, Briefcase, FileText } from 'lucide-react';
+import { Package, MessageSquare, FileText,  GalleryThumbnails } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const Link = ({ href, children, className = '' }) => (
@@ -15,17 +15,17 @@ const Image = ({ src, alt, width, height, className = '' }) => (
 
 const StatsSection = () => {
   const stats = [
-    { number: '50,000+', label: 'Successful Surgeries' },
-    { number: '1,00,000+', label: 'People Trust Us' },
-    { number: '500+', label: 'Cardiac Surgeries Yearly' },
-    { number: '5,000+', label: 'Rated 4.8/5 on Google' }
+    { number: '20,000+', label: 'Successful Surgeries' },
+    { number: '50,000+', label: 'People Trust Us' },
+    { number: '500+', label: 'Urology Patients Treated Yearly' },
+    { number: '300+', label: 'Rated 4.8/5 on Google' }
   ];
 
   const actions = [
-    { icon: <Package className="w-8 h-8 text-blue-600" />, label: 'Health Care Packages', href: '/health-packages' },
-    { icon: <MessageSquare className="w-8 h-8 text-blue-600" />, label: 'Feedback', href: '/feedback' },
-    { icon: <Briefcase className="w-8 h-8 text-blue-600" />, label: 'Build a Career', href: '/careers' },
-    { icon: <FileText className="w-8 h-8 text-blue-600" />, label: 'View Lab Reports', href: '/lab-reports' }
+    { icon: <Package className="w-8 h-8 text-blue-600" />, label: 'Our Departments', href: '/departments' },
+    { icon: <MessageSquare className="w-8 h-8 text-blue-600" />, label: 'Feedback', href: 'https://www.google.com/search?sca_esv=5288266b91241921&sxsrf=AE3TifMFTYqVKXBPKhBYXtcWBdHeQ2fToA:1763098452196&si=AMgyJEtREmoPL4P1I5IDCfuA8gybfVI2d5Uj7QMwYCZHKDZ-E-D_f1vpph5A5OU9IaAPsCO2Qn8La5iKqQtekkTBzLot9QK1DWBFBdLCL0EC1Jocj4WedRqtvN_t9wSBm29F9F5odgtzZS4QP_v5oFlsTmDNR_AwnzRN_3oVDSQTVx59zO6K1jMc8w0Ufx6T_rTU9xZwSvdYJ3mT_sS1DJPH-kTwhSmMiiRp1DSzCdZe3v1q6cM7t7pizitf1bjhllrbGWrh7_pmvEWhoeTn7EbrdkA-7rgN1Q%3D%3D&q=Dr+Rajkumar+Khasgiwala+%28Paras+Urology+And+Multispeciality+Hospital%29+-+Urologist+in+Ajmer/Kidney+Stone/Prostate/Andrologist+Reviews&sa=X&ved=2ahUKEwjG28nH9fCQAxXzRmwGHcPyMScQ0bkNegQIIhAE&biw=1920&bih=869&dpr=1#lrd=0x396be73e8a3211ef:0x7ac5154a134f812e,3,,,,' },
+    { icon: <GalleryThumbnails className="w-8 h-8 text-blue-600" />, label: 'Gallery', href: '/gallery' },
+    { icon: <FileText className="w-8 h-8 text-blue-600" />, label: 'Our Empanelment', href: '/our-empanelment' }
   ];
 
   return (

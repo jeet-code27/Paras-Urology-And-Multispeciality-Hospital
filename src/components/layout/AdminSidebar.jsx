@@ -40,6 +40,11 @@ const menuItems = [
     title: 'Gallery',
     icon: Users,
     path: '/admin/gallery-admin'
+  },
+  {
+    title: 'Departments',
+    icon: Users,
+    path: '/admin/departments'
   }
 ];
 

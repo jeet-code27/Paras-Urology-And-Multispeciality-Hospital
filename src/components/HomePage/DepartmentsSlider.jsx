@@ -1,0 +1,280 @@
+'use client';
+
+import { useState, useEffect } from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+import OtherHeroSection from "@/components/OtherHeroSection";
+import { getDepartments } from '@/lib/firebase/departments';
+import {  Building2, ChevronLeft, ChevronRight } from 'lucide-react';
+import { motion } from 'framer-motion';
+
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+
+// Skeleton Loader Component
+const DepartmentCardSkeleton = () => (
+  <div className="bg-white rounded-lg overflow-hidden shadow-lg h-full animate-pulse border border-gray-200">
+    {/* Image Skeleton */}
+    <div className="relative h-64 bg-gradient-to-br from-gray-200 to-gray-300">
+      {/* Title bar at bottom */}
+      <div className="absolute bottom-0 left-0 right-0 bg-blue-700 p-4">
+        <div className="h-6 bg-blue-800 rounded w-2/3"></div>
+      </div>
+    </div>
+
+    {/* Content Skeleton */}
+    <div className="p-6 space-y-3">
+      <div className="h-4 bg-gray-300 rounded w-full"></div>
+      <div className="h-4 bg-gray-300 rounded w-5/6"></div>
+      <div className="h-4 bg-gray-300 rounded w-4/5"></div>
+      
+      {/* Know More button skeleton */}
+      <div className="pt-4">
+        <div className="h-5 bg-blue-200 rounded w-1/3"></div>
+      </div>
+    </div>
+  </div>
+);
+
+export default function DepartmentsSlider() {
+  const [departments, setDepartments] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // For full-screen view
+  const [selectedDepartment, setSelectedDepartment] = useState(null);
+
+  useEffect(() => {
+    const loadDepartments = async () => {
+      const result = await getDepartments();
+      if (result.success) {
+        setDepartments(result.data);
+      }
+      setLoading(false);
+    };
+    loadDepartments();
+  }, []);
+
+  // ============================
+  // CARD COMPONENT (INLINE)
+  // ============================
+  function DepartmentCard({ department }) {
+    return (
+      <div
+        onClick={() => setSelectedDepartment(department)}
+        className="cursor-pointer bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 h-full"
+      >
+        {/* Image */}
+        <div className="relative h-64 overflow-hidden">
+          {department.imageUrl ? (
+            <img
+              src={department.imageUrl}
+              alt={department.title}
+              className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
+            />
+          ) : (
+            <div className="flex items-center justify-center h-full bg-gradient-to-br from-blue-100 to-indigo-200">
+              <Building2 className="w-20 h-20 text-blue-400" />
+            </div>
+          )}
+
+          {/* Title bar at bottom of image */}
+          <div className="absolute bottom-0 left-0 right-0 bg-blue-700 p-4">
+            <h3 className="text-xl font-bold text-white">
+              {department.title}
+            </h3>
+          </div>
+        </div>
+
+        {/* Description */}
+        <div className="p-6">
+          <p className="text-gray-700 leading-relaxed text-sm line-clamp-3 mb-4">
+            {department.description}
+          </p>
+
+          <button className="text-blue-600 text-sm font-semibold flex items-center gap-2 hover:gap-3 transition-all">
+            Know More
+            <span>→</span>
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // ============================
+  // FULL-SCREEN MODAL
+  // ============================
+  const FullScreenView = () => (
+    <div className="fixed inset-0 bg-black/70 backdrop-blur-md z-50 flex items-center justify-center p-6">
+      <div className="bg-white max-w-4xl w-full rounded-2xl shadow-2xl overflow-hidden animate-[fadeIn_0.3s_ease] relative">
+        
+        {/* Close Button */}
+        <button
+          onClick={() => setSelectedDepartment(null)}
+          className="absolute top-4 right-4 bg-black/70 hover:bg-black text-white rounded-full px-3 py-1 text-sm z-10"
+        >
+          ✕
+        </button>
+
+        {/* Image */}
+        <div className="h-72 w-full overflow-hidden">
+          {selectedDepartment.imageUrl ? (
+            <img
+              src={selectedDepartment.imageUrl}
+              alt={selectedDepartment.title}
+              className="w-full h-full object-cover"
+            />
+          ) : (
+            <div className="flex items-center justify-center h-full bg-gradient-to-br from-blue-100 to-indigo-300">
+              <Building2 className="w-20 h-20 text-blue-500" />
+            </div>
+          )}
+        </div>
+
+        {/* Content */}
+        <div className="p-8 space-y-4">
+          <h2 className="text-3xl font-bold text-gray-800">
+            {selectedDepartment.title}
+          </h2>
+
+          <p className="text-gray-600 leading-relaxed text-lg whitespace-pre-line">
+            {selectedDepartment.description}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+
+  return (
+    <>
+      {selectedDepartment && <FullScreenView />}
+
+    
+
+      <section className="py-16 px-4 md:px-8 bg-white">
+        <div className="max-w-7xl mx-auto">
+          {/* Header */}
+          <motion.div
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: 'easeOut' }}
+            viewport={{ once: true }}
+          >
+            
+            <h2 className="text-4xl md:text-5xl font-bold text-[#1C398E] mb-4">
+              Our Medical Departments
+            </h2>
+           
+            <motion.div
+              className="w-24 h-1 bg-blue-600 mx-auto mt-6"
+              initial={{ scaleX: 0 }}
+              whileInView={{ scaleX: 1 }}
+              transition={{ delay: 0.3, duration: 0.6, ease: 'easeOut' }}
+              viewport={{ once: true }}
+            />
+          </motion.div>
+
+          {/* Loading with Skeleton */}
+          {loading ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {[...Array(6)].map((_, i) => (
+                <DepartmentCardSkeleton key={i} />
+              ))}
+            </div>
+          ) : departments.length === 0 ? (
+            /* Empty */
+            <div className="flex flex-col items-center justify-center h-64 bg-white rounded-2xl shadow-lg">
+              <Building2 className="w-16 h-16 mb-4 text-gray-300" />
+              <p className="text-lg font-medium text-gray-500">No departments available</p>
+              <p className="text-sm text-gray-400 mt-2">Check back later for updates</p>
+            </div>
+          ) : (
+            /* Slider */
+            <motion.div
+              className="relative px-12"
+              initial={{ opacity: 0, y: 60 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, ease: 'easeOut' }}
+              viewport={{ once: true }}
+            >
+              <Swiper
+                modules={[Navigation, Pagination, Autoplay]}
+                spaceBetween={30}
+                slidesPerView={1}
+                navigation={{
+                  prevEl: '.swiper-button-prev-custom',
+                  nextEl: '.swiper-button-next-custom',
+                }}
+                pagination={{
+                  clickable: true,
+                  el: '.swiper-pagination-custom',
+                }}
+                autoplay={{
+                  delay: 5000,
+                  disableOnInteraction: false,
+                }}
+                loop={departments.length > 3}
+                breakpoints={{
+                  640: { slidesPerView: 2 },
+                  1024: { slidesPerView: 3 },
+                }}
+                className="departments-swiper"
+              >
+                {departments.map((department, i) => (
+                  <SwiperSlide key={department.id}>
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.6, delay: i * 0.1, ease: 'easeOut' }}
+                      viewport={{ once: true }}
+                    >
+                      <DepartmentCard department={department} />
+                    </motion.div>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+
+              {/* Custom Navigation Buttons */}
+              <button className="swiper-button-prev-custom absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full p-3 shadow-lg hover:bg-blue-600 hover:text-white transition-colors duration-300 group">
+                <ChevronLeft className="w-6 h-6 text-blue-600 group-hover:text-white" />
+              </button>
+              <button className="swiper-button-next-custom absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full p-3 shadow-lg hover:bg-blue-600 hover:text-white transition-colors duration-300 group">
+                <ChevronRight className="w-6 h-6 text-blue-600 group-hover:text-white" />
+              </button>
+
+              {/* Custom Pagination */}
+              <div className="swiper-pagination-custom mt-8 flex justify-center gap-2"></div>
+            </motion.div>
+          )}
+        </div>
+      </section>
+
+      {/* Pagination Styling */}
+      <style jsx global>{`
+        .swiper-pagination-custom .swiper-pagination-bullet {
+          width: 12px;
+          height: 12px;
+          background: #cbd5e1;
+          opacity: 1;
+          transition: all 0.3s;
+        }
+
+        .swiper-pagination-custom .swiper-pagination-bullet-active {
+          width: 32px;
+          border-radius: 6px;
+          background: #2563eb;
+        }
+
+        .departments-swiper {
+          padding-bottom: 20px;
+        }
+
+        .departments-swiper .swiper-slide {
+          height: auto;
+        }
+      `}</style>
+    </>
+  );
+}

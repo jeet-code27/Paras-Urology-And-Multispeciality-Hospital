@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import {
-  ChevronDown,
   Menu,
   X,
   Phone,
@@ -81,7 +80,7 @@ const Navigation = () => {
 
           <div className="flex items-center gap-3 lg:gap-4">
             <a
-              href="#"
+              href="https://www.facebook.com/PUMHAJMER/"
               className="hover:text-blue-200 transition-colors"
               aria-label="Facebook"
             >
@@ -95,7 +94,7 @@ const Navigation = () => {
               <Instagram size={16} className="lg:w-[18px] lg:h-[18px]" />
             </a>
             <a
-              href="#"
+              href="https://www.youtube.com/channel/UC3Oq_C_ae5qQqiflY0h30Kw"
               className="hover:text-blue-200 transition-colors"
               aria-label="Youtube"
             >
@@ -148,12 +147,7 @@ const Navigation = () => {
               >
                 Departments
               </Link>
-              <Link
-                href="/services"
-                className="text-gray-700 hover:text-blue-700 font-medium transition-colors text-sm xl:text-base"
-              >
-                Services
-              </Link>
+              
               <Link
                 href="/our-empanelment"
                 className="text-gray-700 hover:text-blue-700 font-medium transition-colors text-sm xl:text-base"
@@ -259,13 +253,7 @@ const Navigation = () => {
                   >
                     Departments
                   </Link>
-                  <Link
-                    href="/services"
-                    className="text-gray-700 hover:text-blue-700 hover:bg-blue-50 font-medium py-3 px-4 rounded-lg transition-all"
-                    onClick={closeMobileMenu}
-                  >
-                    Services
-                  </Link>
+                  
                   <Link
                     href="/empanelments"
                     className="text-gray-700 hover:text-blue-700 hover:bg-blue-50 font-medium py-3 px-4 rounded-lg transition-all"

@@ -3,7 +3,32 @@
 import { useState, useEffect } from 'react';
 import OtherHeroSection from "@/components/OtherHeroSection";
 import { getDepartments } from '@/lib/firebase/departments';
-import { Loader2, Building2, Stethoscope, Heart, Users } from 'lucide-react';
+import { Loader2, Building2, Stethoscope, Heart, Users, ArrowRight } from 'lucide-react';
+
+// Skeleton Loader Component
+const DepartmentCardSkeleton = () => (
+  <div className="bg-white rounded-lg overflow-hidden shadow-md border border-gray-200 animate-pulse">
+    {/* Image Skeleton */}
+    <div className="relative h-64 bg-gradient-to-br from-gray-200 to-gray-300">
+      {/* Title bar at bottom */}
+      <div className="absolute bottom-0 left-0 right-0 bg-blue-700 p-4">
+        <div className="h-6 bg-blue-800 rounded w-2/3"></div>
+      </div>
+    </div>
+
+    {/* Content Skeleton */}
+    <div className="p-6 space-y-3">
+      <div className="h-4 bg-gray-300 rounded w-full"></div>
+      <div className="h-4 bg-gray-300 rounded w-5/6"></div>
+      <div className="h-4 bg-gray-300 rounded w-4/5"></div>
+      
+      {/* Know More button skeleton */}
+      <div className="pt-4">
+        <div className="h-5 bg-blue-200 rounded w-1/3"></div>
+      </div>
+    </div>
+  </div>
+);
 
 export default function DepartmentsPage() {
   const [departments, setDepartments] = useState([]);
@@ -30,22 +55,26 @@ export default function DepartmentsPage() {
     return <Icon className="w-6 h-6" />;
   };
 
+  // Truncate description to show preview
+  const truncateText = (text, maxLength = 150) => {
+    if (!text) return '';
+    if (text.length <= maxLength) return text;
+    return text.substring(0, maxLength).trim() + '...';
+  };
+
   // ============================
   // CARD COMPONENT (INLINE)
   // ============================
   function DepartmentCard({ department, index }) {
     return (
-      <div
-        onClick={() => setSelectedDepartment(department)}
-        className="cursor-pointer bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 group border border-gray-400 hover:-translate-y-2"
-      >
-        {/* Image */}
-        <div className="relative h-56 overflow-hidden">
+      <div className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 border border-gray-200">
+        {/* Image with title overlay */}
+        <div className="relative h-64 overflow-hidden">
           {department.imageUrl ? (
             <img
               src={department.imageUrl}
               alt={department.title}
-              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+              className="w-full h-full object-cover"
             />
           ) : (
             <div className="flex items-center justify-center h-full bg-gradient-to-br from-blue-100 to-indigo-200">
@@ -53,31 +82,29 @@ export default function DepartmentsPage() {
             </div>
           )}
 
-          {/* Icon badge */}
-          <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm p-3 rounded-full text-blue-600 shadow-lg">
-            {getIcon(index)}
-          </div>
-
-          {/* Title overlay */}
-          <div className="absolute bottom-[-20px] left-0 right-0 p-6">
-            <h3 className="text-2xl font-bold text-white drop-shadow-lg text-center">
+          {/* Dark overlay for title */}
+          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-blue-900 to-blue-700 p-4">
+            <h3 className="text-xl font-bold text-white">
               {department.title}
             </h3>
           </div>
         </div>
 
-        {/* Brief description */}
+        {/* Description Content */}
         <div className="p-6">
-          {/* <p className="text-gray-600 leading-relaxed text-wrap line-clamp-2">
-            {department.description}
-          </p> */}
+          <p className="text-gray-700 text-sm leading-relaxed mb-4">
+            {truncateText(department.description, 150)}
+          </p>
 
-          <span className="text-blue-600 text-sm font-semibold mt-3 inline-block">
-            View details →
-          </span>
+          {/* Know More Button */}
+          <button
+            onClick={() => setSelectedDepartment(department)}
+            className="inline-flex items-center text-blue-600 font-semibold text-sm hover:text-blue-800 transition-colors group"
+          >
+            Know More
+            <ArrowRight className="ml-1 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+          </button>
         </div>
-
-        <div className="h-1 bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
       </div>
     );
   }
@@ -86,13 +113,13 @@ export default function DepartmentsPage() {
   // FULL-SCREEN MODAL
   // ============================
   const FullScreenView = () => (
-    <div className="fixed inset-0 bg-black/70 backdrop-blur-md z-50 flex items-center justify-center p-6">
-      <div className="bg-white max-w-4xl w-full rounded-2xl shadow-2xl overflow-hidden animate-[fadeIn_0.3s_ease] relative">
+    <div className="fixed inset-0 bg-black/70 backdrop-blur-md z-50 flex items-center justify-center p-6 overflow-y-auto">
+      <div className="bg-white max-w-4xl w-full rounded-2xl shadow-2xl overflow-hidden animate-[fadeIn_0.3s_ease] relative my-8">
         
         {/* Close Button */}
         <button
           onClick={() => setSelectedDepartment(null)}
-          className="absolute top-4 right-4 bg-black/70 hover:bg-black text-white rounded-full px-3 py-1 text-sm"
+          className="absolute top-4 right-4 bg-black/70 hover:bg-black text-white rounded-full w-8 h-8 flex items-center justify-center text-lg z-10"
         >
           ✕
         </button>
@@ -132,7 +159,7 @@ export default function DepartmentsPage() {
 
       <OtherHeroSection title="Our Departments" imageUrl="/images/hero.jpg" />
 
-      <section className="py-16 px-4 md:px-8 bg-white">
+      <section className="py-16 px-4 md:px-8 bg-gray-50">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
           <div className="text-center mb-16">
@@ -148,11 +175,12 @@ export default function DepartmentsPage() {
             </p>
           </div>
 
-          {/* Loading */}
+          {/* Loading with Skeleton */}
           {loading ? (
-            <div className="flex items-center justify-center min-h-[400px]">
-              <Loader2 className="w-12 h-12 text-blue-600 animate-spin mx-auto mb-4" />
-              <p className="text-gray-600 font-medium">Loading departments...</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {[...Array(8)].map((_, i) => (
+                <DepartmentCardSkeleton key={i} />
+              ))}
             </div>
           ) : departments.length === 0 ? (
             /* Empty */
@@ -162,8 +190,8 @@ export default function DepartmentsPage() {
               <p className="text-sm text-gray-400 mt-2">Check back later for updates</p>
             </div>
           ) : (
-            /* Grid */
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            /* Grid - 4 columns to match the image layout */
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {departments.map((department, index) => (
                 <DepartmentCard
                   key={department.id}
