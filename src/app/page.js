@@ -7,12 +7,14 @@ import GallerySlider from "@/components/HomePage/GallerySlider";
 import HeroSection from "@/components/HomePage/HeroSection";
 import HospitalAppointment from "@/components/HomePage/HospitalAppointment";
 import StatsSection from "@/components/HomePage/StatsSection";
+import Marquee from "@/components/layout/Marqee";
 
 
 export default function Home() {
   return (
    <main>
     <HeroSection />
+    <Marquee />
     <StatsSection/>
     <AboutSection/>
     <DepartmentsSlider/>
@@ -23,7 +25,7 @@ export default function Home() {
     <HospitalAppointment/>
     </div>
     <DoctorsProfile/>
-
+    
    </main>
   );
 }

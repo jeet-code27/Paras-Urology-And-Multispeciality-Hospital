@@ -13,6 +13,7 @@ export default function DoctorManagementPanel() {
   const [editingDoctor, setEditingDoctor] = useState(null);
   const [uploading, setUploading] = useState(false);
 
+  // FINAL formData includes sortOrder
   const [formData, setFormData] = useState({
     name: '',
     education: '',
@@ -23,7 +24,8 @@ export default function DoctorManagementPanel() {
     about: '',
     timing: '',
     memberships: '',
-    imageUrl: ''
+    imageUrl: '',
+    sortOrder: 0,        // ✅ new field
   });
 
   const [imageFile, setImageFile] = useState(null);
@@ -51,17 +53,14 @@ export default function DoctorManagementPanel() {
         toast.error('Image size should be less than 5MB');
         return;
       }
-      
       if (!file.type.startsWith('image/')) {
         toast.error('Please select an image file');
         return;
       }
-      
+
       setImageFile(file);
       const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result);
-      };
+      reader.onloadend = () => setImagePreview(reader.result);
       reader.readAsDataURL(file);
       toast.success('Image selected');
     }
@@ -83,7 +82,8 @@ export default function DoctorManagementPanel() {
       about: '',
       timing: '',
       memberships: '',
-      imageUrl: ''
+      imageUrl: '',
+      sortOrder: 0,
     });
     setImageFile(null);
     setImagePreview('');
@@ -92,7 +92,6 @@ export default function DoctorManagementPanel() {
   };
 
   const handleSubmit = async () => {
-    // Validate required fields
     if (!formData.name || !formData.education || !formData.college || 
         !formData.experience || !formData.expertise || !formData.timing || 
         !formData.achievements) {
@@ -112,32 +111,26 @@ export default function DoctorManagementPanel() {
       let imageUrl = formData.imageUrl;
       let oldImageUrl = editingDoctor?.imageUrl;
 
-      // Upload new image if selected
       if (imageFile) {
         toast.loading('Uploading new image...', { id: uploadToast });
         const uploadResult = await uploadToCloudinary(imageFile);
-        
+
         if (!uploadResult.success) {
           throw new Error(uploadResult.error || 'Failed to upload image');
         }
-        
+
         imageUrl = uploadResult.url;
 
-        // If updating and there's an old image, delete it from Cloudinary
         if (editingDoctor && oldImageUrl) {
           const oldPublicId = extractPublicId(oldImageUrl);
           if (oldPublicId) {
             toast.loading('Removing old image...', { id: uploadToast });
-            const deleteResult = await deleteFromCloudinary(oldPublicId);
-            if (!deleteResult.success) {
-              console.warn('Failed to delete old image from Cloudinary:', deleteResult.error);
-              // Continue anyway - we don't want to fail the update just because old image deletion failed
-            }
+            await deleteFromCloudinary(oldPublicId);
           }
         }
       }
 
-      // Prepare doctor data
+      // FINAL doctorData includes sortOrder
       const doctorData = {
         name: formData.name.trim(),
         education: formData.education.trim(),
@@ -151,7 +144,8 @@ export default function DoctorManagementPanel() {
           .split('\n')
           .map(m => m.trim())
           .filter(m => m.length > 0),
-        imageUrl
+        imageUrl,
+        sortOrder: Number(formData.sortOrder) || 0,  // ✅ NEW
       };
 
       let result;
@@ -164,10 +158,9 @@ export default function DoctorManagementPanel() {
       if (result.success) {
         await loadDoctors();
         resetForm();
-        toast.success(
-          editingDoctor ? 'Doctor updated successfully!' : 'Doctor added successfully!',
-          { id: uploadToast }
-        );
+        toast.success(editingDoctor ? 'Doctor updated successfully!' : 'Doctor added successfully!', {
+          id: uploadToast,
+        });
       } else {
         throw new Error(result.error);
       }
@@ -190,49 +183,36 @@ export default function DoctorManagementPanel() {
       achievements: doctor.achievements || '',
       about: doctor.about || '',
       timing: doctor.timing || '',
-      memberships: Array.isArray(doctor.memberships) 
-        ? doctor.memberships.join('\n') 
+      memberships: Array.isArray(doctor.memberships)
+        ? doctor.memberships.join('\n')
         : (doctor.memberships || ''),
-      imageUrl: doctor.imageUrl || ''
+      imageUrl: doctor.imageUrl || '',
+      sortOrder: doctor.sortOrder ?? 0,   // ✅ load existing
     });
     setImagePreview(doctor.imageUrl || '');
     setShowForm(true);
   };
 
   const handleDelete = async (id, name, imageUrl) => {
-    if (!confirm(`Are you sure you want to delete Dr. ${name}? This will also delete their image from Cloudinary.`)) {
-      return;
-    }
+    if (!confirm(`Are you sure you want to delete Dr. ${name}?`)) return;
 
     const deleteToast = toast.loading('Deleting doctor...');
-    
+
     try {
-      // First, delete image from Cloudinary if it exists
       if (imageUrl) {
         const publicId = extractPublicId(imageUrl);
-        if (publicId) {
-          toast.loading('Deleting image from Cloudinary...', { id: deleteToast });
-          const cloudinaryResult = await deleteFromCloudinary(publicId);
-          
-          if (!cloudinaryResult.success) {
-            console.warn('Failed to delete image from Cloudinary:', cloudinaryResult.error);
-            // Continue with doctor deletion even if image deletion fails
-          }
-        }
+        if (publicId) await deleteFromCloudinary(publicId);
       }
 
-      // Then delete doctor from Firestore
-      toast.loading('Deleting doctor profile...', { id: deleteToast });
       const result = await deleteDoctor(id);
-      
+
       if (result.success) {
         await loadDoctors();
-        toast.success('Doctor and image deleted successfully!', { id: deleteToast });
+        toast.success('Doctor deleted successfully!', { id: deleteToast });
       } else {
         throw new Error(result.error);
       }
     } catch (error) {
-      console.error('Delete error:', error);
       toast.error(error.message || 'Error deleting doctor', { id: deleteToast });
     }
   };
@@ -248,6 +228,8 @@ export default function DoctorManagementPanel() {
   return (
     <div className="min-h-screen bg-gray-50 p-4 md:p-8">
       <div className="max-w-7xl mx-auto">
+        
+        {/* Header */}
         <div className="flex justify-between items-center mb-8">
           <div>
             <h1 className="text-3xl font-bold text-gray-800">Doctor Management</h1>
@@ -264,283 +246,269 @@ export default function DoctorManagementPanel() {
           )}
         </div>
 
+        {/* FORM */}
         {showForm && (
           <div className="bg-white p-6 rounded-xl shadow-md mb-8">
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-2xl font-semibold text-gray-800">
                 {editingDoctor ? 'Edit Doctor' : 'Add New Doctor'}
               </h2>
-              <button
-                onClick={resetForm}
-                className="text-gray-500 hover:text-gray-700"
-                disabled={uploading}
-              >
-                <X className="w-6 h-6" />
+              <button onClick={resetForm} disabled={uploading}>
+                <X className="w-6 h-6 text-gray-500 hover:text-gray-700" />
               </button>
             </div>
 
             <div className="space-y-6">
+              
+              {/* 2 Column Grid */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                {/* Doctor Name */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Doctor Name *
-                  </label>
+                  <label className="block text-sm font-medium mb-2">Doctor Name *</label>
                   <input
                     type="text"
                     name="name"
                     value={formData.name}
                     onChange={handleInputChange}
                     disabled={uploading}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100"
+                    className="w-full px-4 py-2 border rounded-lg"
                     placeholder="Dr. John Doe"
                   />
                 </div>
 
+                {/* Education */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Education *
-                  </label>
+                  <label className="block text-sm font-medium mb-2">Education *</label>
                   <input
                     type="text"
                     name="education"
                     value={formData.education}
                     onChange={handleInputChange}
                     disabled={uploading}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100"
+                    className="w-full px-4 py-2 border rounded-lg"
                     placeholder="MBBS, MS"
                   />
                 </div>
 
+                {/* College */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    College *
-                  </label>
+                  <label className="block text-sm font-medium mb-2">College *</label>
                   <input
                     type="text"
                     name="college"
                     value={formData.college}
                     onChange={handleInputChange}
                     disabled={uploading}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100"
-                    placeholder="SMS Medical College, Jaipur"
+                    className="w-full px-4 py-2 border rounded-lg"
+                    placeholder="SMS Medical College"
                   />
                 </div>
 
+                {/* Experience */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Experience *
-                  </label>
+                  <label className="block text-sm font-medium mb-2">Experience *</label>
                   <input
                     type="text"
                     name="experience"
                     value={formData.experience}
                     onChange={handleInputChange}
                     disabled={uploading}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100"
-                    placeholder="40+ Years"
+                    className="w-full px-4 py-2 border rounded-lg"
+                    placeholder="10+ Years"
                   />
                 </div>
 
+                {/* Expertise */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Expertise *
-                  </label>
+                  <label className="block text-sm font-medium mb-2">Expertise *</label>
                   <input
                     type="text"
                     name="expertise"
                     value={formData.expertise}
                     onChange={handleInputChange}
                     disabled={uploading}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100"
-                    placeholder="Laparoscopic Surgery, Hernia"
+                    className="w-full px-4 py-2 border rounded-lg"
+                    placeholder="Laparoscopy, Hernia"
                   />
                 </div>
 
+                {/* Timing */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Timing *
-                  </label>
+                  <label className="block text-sm font-medium mb-2">Timing *</label>
                   <input
                     type="text"
                     name="timing"
                     value={formData.timing}
                     onChange={handleInputChange}
                     disabled={uploading}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100"
-                    placeholder="Monday to Saturday (10:00 AM - 01:00 PM)"
+                    className="w-full px-4 py-2 border rounded-lg"
+                    placeholder="Mon–Sat (10 AM - 1 PM)"
                   />
                 </div>
+
+                {/* Sort Order  */}
+                <div>
+                  <label className="block text-sm font-medium mb-2">
+                    Sort Order (Lower = First) *
+                  </label>
+                  <input
+                    type="number"
+                    name="sortOrder"
+                    value={formData.sortOrder}
+                    onChange={handleInputChange}
+                    disabled={uploading}
+                    className="w-full px-4 py-2 border rounded-lg"
+                    placeholder="1"
+                  />
+                </div>
+
               </div>
 
+              {/* Achievements */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Achievements/Recognition *
-                </label>
+                <label className="block text-sm font-medium mb-2">Achievements *</label>
                 <input
                   type="text"
                   name="achievements"
                   value={formData.achievements}
                   onChange={handleInputChange}
                   disabled={uploading}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100"
-                  placeholder="Experience of doing more than 65000 procedures"
+                  className="w-full px-4 py-2 border rounded-lg"
+                  placeholder="Performed 65000+ surgeries"
                 />
               </div>
 
+              {/* About */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  About Doctor (Optional)
-                </label>
+                <label className="block text-sm font-medium mb-2">About (Optional)</label>
                 <textarea
                   name="about"
                   value={formData.about}
                   onChange={handleInputChange}
-                  disabled={uploading}
                   rows="4"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100"
-                  placeholder="Brief description about the doctor..."
+                  disabled={uploading}
+                  className="w-full px-4 py-2 border rounded-lg"
+                  placeholder="Write about the doctor..."
                 />
               </div>
 
+              {/* Memberships */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Memberships (Optional - One per line)
+                <label className="block text-sm font-medium mb-2">
+                  Memberships (One per line)
                 </label>
                 <textarea
                   name="memberships"
                   value={formData.memberships}
                   onChange={handleInputChange}
+                  rows="4"
                   disabled={uploading}
-                  rows="5"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100"
-                  placeholder="Life Member of Association of Surgeons India&#10;Indian Medical Association&#10;Indian Society of Critical Care Medicine"
+                  className="w-full px-4 py-2 border rounded-lg"
+                  placeholder="Indian Medical Association&#10;ASICON"
                 />
               </div>
 
+              {/* Image Upload */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium mb-2">
                   Doctor Image * {editingDoctor && '(Upload new to replace)'}
                 </label>
+
                 {imagePreview && (
-                  <div className="mb-4 relative inline-block">
-                    <img
-                      src={imagePreview}
-                      alt="Preview"
-                      className="w-40 h-40 object-cover rounded-lg border-2 border-blue-500"
-                    />
-                    {editingDoctor && imageFile && (
-                      <div className="absolute top-2 right-2 bg-yellow-500 text-white px-2 py-1 rounded text-xs font-semibold">
-                        Will Replace
-                      </div>
-                    )}
+                  <div className="mb-4">
+                    <img src={imagePreview} alt="Preview" className="w-40 h-40 object-cover rounded-lg" />
                   </div>
                 )}
-                <label className="flex flex-col items-center justify-center h-32 bg-gray-50 rounded-lg border-2 border-dashed border-gray-300 cursor-pointer hover:bg-gray-100 transition-colors">
+
+                <label className="flex flex-col items-center justify-center h-32 border-2 border-dashed rounded-lg cursor-pointer bg-gray-50">
                   <Upload className="w-8 h-8 text-gray-400 mb-2" />
-                  <span className="text-sm text-gray-600">
-                    {editingDoctor ? 'Click to upload new image' : 'Click to upload doctor image'}
-                  </span>
-                  <span className="text-xs text-gray-500">PNG, JPG up to 5MB</span>
-                  {editingDoctor && (
-                    <span className="text-xs text-yellow-600 mt-1">Old image will be deleted from Cloudinary</span>
-                  )}
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleFileChange}
-                    disabled={uploading}
-                    className="hidden"
-                  />
+                  <span className="text-sm text-gray-600">Click to upload image</span>
+                  <input type="file" className="hidden" accept="image/*" onChange={handleFileChange} />
                 </label>
               </div>
 
+              {/* Save / Cancel */}
               <div className="flex gap-4">
                 <button
                   onClick={handleSubmit}
                   disabled={uploading}
-                  className="flex-1 bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors disabled:bg-blue-400 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  className="flex-1 bg-blue-600 text-white py-3 rounded-lg"
                 >
-                  {uploading ? (
-                    <>
-                      <Loader2 className="w-5 h-5 animate-spin" />
-                      Saving...
-                    </>
-                  ) : (
-                    <>
-                      <Save className="w-5 h-5" />
-                      {editingDoctor ? 'Update Doctor' : 'Add Doctor'}
-                    </>
-                  )}
+                  {uploading ? 'Saving...' : editingDoctor ? 'Update Doctor' : 'Add Doctor'}
                 </button>
+
                 <button
                   onClick={resetForm}
                   disabled={uploading}
-                  className="px-8 bg-gray-200 text-gray-700 py-3 rounded-lg font-semibold hover:bg-gray-300 transition-colors disabled:opacity-50"
+                  className="px-8 bg-gray-200 py-3 rounded-lg"
                 >
                   Cancel
                 </button>
               </div>
+
             </div>
           </div>
         )}
 
+        {/* DOCTOR LIST */}
         <div className="bg-white p-6 rounded-xl shadow-md">
-          <h2 className="text-2xl font-semibold text-gray-800 mb-6">
-            All Doctors ({doctors.length})
-          </h2>
+          <h2 className="text-2xl font-semibold mb-6">All Doctors ({doctors.length})</h2>
 
-          {doctors.length === 0 ? (
-            <div className="flex flex-col items-center justify-center h-64 text-gray-500">
+          {doctors.length === 0 && (
+            <div className="flex flex-col items-center justify-center h-40 text-gray-500">
               <User className="w-16 h-16 mb-4" />
-              <p className="text-lg">No doctors added yet</p>
-              <p className="text-sm">Click "Add Doctor" to create a profile</p>
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {doctors.map((doctor) => (
-                <div key={doctor.id} className="border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
-                  <div className="h-48 bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center">
-                    {doctor.imageUrl ? (
-                      <img
-                        src={doctor.imageUrl}
-                        alt={doctor.name}
-                        className="w-full h-full object-cover"
-                      />
-                    ) : (
-                      <User className="w-20 h-20 text-blue-400" />
-                    )}
-                  </div>
-                  <div className="p-4">
-                    <h3 className="text-xl font-semibold text-gray-800 mb-1">
-                      {doctor.name}
-                    </h3>
-                    <p className="text-sm text-blue-600 mb-3">{doctor.education}</p>
-                    <div className="space-y-1 text-sm text-gray-600 mb-4">
-                      <p><span className="font-medium">College:</span> {doctor.college}</p>
-                      <p><span className="font-medium">Experience:</span> {doctor.experience}</p>
-                      <p><span className="font-medium">Expertise:</span> {doctor.expertise}</p>
-                    </div>
-                    <div className="flex gap-2">
-                      <button
-                        onClick={() => handleEdit(doctor)}
-                        className="flex-1 bg-blue-50 text-blue-600 py-2 rounded-lg font-medium hover:bg-blue-100 transition-colors flex items-center justify-center gap-2"
-                      >
-                        <Edit className="w-4 h-4" />
-                        Edit
-                      </button>
-                      <button
-                        onClick={() => handleDelete(doctor.id, doctor.name, doctor.imageUrl)}
-                        className="flex-1 bg-red-50 text-red-600 py-2 rounded-lg font-medium hover:bg-red-100 transition-colors flex items-center justify-center gap-2"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                        Delete
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              ))}
+              <p>No doctors added yet</p>
             </div>
           )}
+
+          {/* Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {doctors.map(doctor => (
+              <div key={doctor.id} className="border rounded-lg overflow-hidden hover:shadow-lg">
+
+                <div className="h-48 bg-gray-100 flex items-center justify-center">
+                  {doctor.imageUrl ? (
+                    <img src={doctor.imageUrl} className="w-full h-full object-cover" />
+                  ) : (
+                    <User className="w-20 h-20 text-gray-400" />
+                  )}
+                </div>
+
+                <div className="p-4">
+                  <h3 className="text-xl font-semibold">{doctor.name}</h3>
+                  <p className="text-sm text-blue-600 mb-3">{doctor.education}</p>
+                  <p className="text-sm"><b>College:</b> {doctor.college}</p>
+                  <p className="text-sm"><b>Experience:</b> {doctor.experience}</p>
+                  <p className="text-sm"><b>Expertise:</b> {doctor.expertise}</p>
+
+                  {/* sort order display */}
+                  <p className="text-xs mt-2 text-gray-500">Sort Order: {doctor.sortOrder}</p>
+
+                  <div className="flex gap-2 mt-4">
+                    <button
+                      onClick={() => {
+                        handleEdit(doctor);
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                      }}
+                      className="flex-1 bg-blue-50 text-blue-600 py-2 rounded-lg"
+                    >
+                      Edit
+                    </button>
+
+                    <button
+                      onClick={() => handleDelete(doctor.id, doctor.name, doctor.imageUrl)}
+                      className="flex-1 bg-red-50 text-red-600 py-2 rounded-lg"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
+
+              </div>
+            ))}
+          </div>
+
         </div>
       </div>
     </div>

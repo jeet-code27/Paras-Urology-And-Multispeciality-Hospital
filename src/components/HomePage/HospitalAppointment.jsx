@@ -1,27 +1,27 @@
-'use client';
-import React, { useState } from 'react';
+"use client";
+import React, { useState } from "react";
 
-import Image from 'next/image';
+import Image from "next/image";
 
 export default function HospitalAppointment() {
   const [formData, setFormData] = useState({
-    fullName: '',
-    email: '',
-    phone: '',
-    department: '',
-    message: ''
+    fullName: "",
+    email: "",
+    phone: "",
+    department: "",
+    message: "",
   });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    alert('Appointment request submitted!');
+    console.log("Form submitted:", formData);
+    alert("Appointment request submitted!");
   };
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
@@ -29,7 +29,7 @@ export default function HospitalAppointment() {
     <div className="w-full relative overflow-hidden py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto bg-white">
       {/* Background with gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900"></div>
-      
+
       {/* Background Image on left side */}
       <div className="absolute left-0 top-0 bottom-0 w-1/2 opacity-30 hidden lg:block">
         <Image
@@ -83,12 +83,24 @@ export default function HospitalAppointment() {
                 onChange={handleChange}
                 className="w-full px-4 py-3 bg-blue-800/40 border border-blue-600/50 rounded text-white focus:outline-none focus:border-blue-400 transition appearance-none cursor-pointer"
               >
-                <option value="" className="bg-blue-900">Select Department*</option>
-                <option value="cardiology" className="bg-blue-900">Cardiology</option>
-                <option value="orthopedics" className="bg-blue-900">Orthopedics</option>
-                <option value="neurology" className="bg-blue-900">Neurology</option>
-                <option value="pediatrics" className="bg-blue-900">Pediatrics</option>
-                <option value="general" className="bg-blue-900">General Medicine</option>
+                <option value="" className="bg-blue-900">
+                  Select Department*
+                </option>
+                <option value="cardiology" className="bg-blue-900">
+                  Cardiology
+                </option>
+                <option value="orthopedics" className="bg-blue-900">
+                  Orthopedics
+                </option>
+                <option value="neurology" className="bg-blue-900">
+                  Neurology
+                </option>
+                <option value="pediatrics" className="bg-blue-900">
+                  Pediatrics
+                </option>
+                <option value="general" className="bg-blue-900">
+                  General Medicine
+                </option>
               </select>
 
               <textarea
@@ -115,13 +127,13 @@ export default function HospitalAppointment() {
             {/* Google Map */}
             <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 shadow-lg">
               <div className="relative w-full h-64 sm:h-80 lg:h-96 rounded-lg overflow-hidden">
-                <iframe 
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3571.1680511603363!2d74.60461757488017!3d26.48253347844607!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x396be73e8a3211ef%3A0x7ac5154a134f812e!2sDr%20Rajkumar%20Khasgiwala%20(Paras%20Urology%20And%20Multispeciality%20Hospital)%20-%20Urologist%20in%20Ajmer%2FKidney%20Stone%2FProstate%2FAndrologist!5e0!3m2!1sen!2sin!4v1762839093967!5m2!1sen!2sin" 
-                  width="100%" 
-                  height="100%" 
-                  style={{ border: 0 }} 
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3571.1680511603363!2d74.60461757488017!3d26.48253347844607!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x396be73e8a3211ef%3A0x7ac5154a134f812e!2sDr%20Rajkumar%20Khasgiwala%20(Paras%20Urology%20And%20Multispeciality%20Hospital)%20-%20Urologist%20in%20Ajmer%2FKidney%20Stone%2FProstate%2FAndrologist!5e0!3m2!1sen!2sin!4v1762839093967!5m2!1sen!2sin"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
                   allowFullScreen={true}
-                  loading="lazy" 
+                  loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
                   className="rounded-lg"
                 />
@@ -138,7 +150,9 @@ export default function HospitalAppointment() {
                 <li className="flex items-start">
                   <span className="text-yellow-400 mr-3 mt-1">●</span>
                   <span className="text-sm sm:text-base">
-                    Empanelled with Chiranjeevi Swasthya Bima Yojana, RGHS, ESIC, CGHS, ECHS, Railways
+                    Empanelled with Mukhyamantri Ayushman Arogya Yojana (MAA) ,
+                    Chiranjeevi Swasthya Bima Yojana, RGHS, ESIC, CGHS, ECHS,
+                    Railways
                   </span>
                 </li>
                 <li className="flex items-start">
