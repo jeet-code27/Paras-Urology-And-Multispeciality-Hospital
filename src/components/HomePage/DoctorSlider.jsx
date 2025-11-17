@@ -118,7 +118,7 @@ export default function DoctorsSlider() {
                 el: '.swiper-pagination-custom',
               }}
               autoplay={{
-                delay: 5000,
+                delay: 1000,
                 disableOnInteraction: false,
               }}
               loop={doctors.length > 3}

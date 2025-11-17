@@ -48,7 +48,7 @@ export default function EmpanelmentsSlider() {
               nextEl: '.swiper-button-next-custom',
             }}
             autoplay={{
-              delay: 3000,
+              delay: 1000,
               disableOnInteraction: false,
             }}
             loop={empanelments.length > 6}

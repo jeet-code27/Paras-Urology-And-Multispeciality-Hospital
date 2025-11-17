@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Upload, Loader2, Trash2, Edit, Plus, X, Save, Building2 } from 'lucide-react';
 import { getDepartments, addDepartment, updateDepartment, deleteDepartment } from '@/lib/firebase/departments';
 import { uploadToCloudinary, deleteFromCloudinary, extractPublicId } from '@/lib/cloudinary/upload';
@@ -21,6 +21,8 @@ export default function DepartmentManagementPanel() {
 
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState('');
+
+  const formRef = useRef(null);
 
   useEffect(() => {
     loadDepartments();
@@ -78,7 +80,6 @@ export default function DepartmentManagementPanel() {
   };
 
   const handleSubmit = async () => {
-    // Validate required fields
     if (!formData.title || !formData.description) {
       toast.error('Please fill all required fields');
       return;
@@ -96,7 +97,6 @@ export default function DepartmentManagementPanel() {
       let imageUrl = formData.imageUrl;
       let oldImageUrl = editingDepartment?.imageUrl;
 
-      // Upload new image if selected
       if (imageFile) {
         toast.loading('Uploading new image...', { id: uploadToast });
         const uploadResult = await uploadToCloudinary(imageFile);
@@ -107,7 +107,6 @@ export default function DepartmentManagementPanel() {
 
         imageUrl = uploadResult.url;
 
-        // If updating and there's an old image, delete it from Cloudinary
         if (editingDepartment && oldImageUrl) {
           const oldPublicId = extractPublicId(oldImageUrl);
           if (oldPublicId) {
@@ -115,13 +114,11 @@ export default function DepartmentManagementPanel() {
             const deleteResult = await deleteFromCloudinary(oldPublicId);
             if (!deleteResult.success) {
               console.warn('Failed to delete old image from Cloudinary:', deleteResult.error);
-              // Continue anyway - we don't want to fail the update just because old image deletion failed
             }
           }
         }
       }
 
-      // Prepare department data
       const departmentData = {
         title: formData.title.trim(),
         description: formData.description.trim(),
@@ -162,6 +159,12 @@ export default function DepartmentManagementPanel() {
     });
     setImagePreview(department.imageUrl || '');
     setShowForm(true);
+    
+    setTimeout(() => {
+      if (formRef.current) {
+        formRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 100);
   };
 
   const handleDelete = async (id, title, imageUrl) => {
@@ -172,7 +175,6 @@ export default function DepartmentManagementPanel() {
     const deleteToast = toast.loading('Deleting department...');
 
     try {
-      // First, delete image from Cloudinary if it exists
       if (imageUrl) {
         const publicId = extractPublicId(imageUrl);
         if (publicId) {
@@ -181,12 +183,10 @@ export default function DepartmentManagementPanel() {
 
           if (!cloudinaryResult.success) {
             console.warn('Failed to delete image from Cloudinary:', cloudinaryResult.error);
-            // Continue with department deletion even if image deletion fails
           }
         }
       }
 
-      // Then delete department from Firestore
       toast.loading('Deleting department...', { id: deleteToast });
       const result = await deleteDepartment(id);
 
@@ -230,7 +230,7 @@ export default function DepartmentManagementPanel() {
         </div>
 
         {showForm && (
-          <div className="bg-white p-6 rounded-xl shadow-md mb-8 border border-gray-200">
+          <div ref={formRef} className="bg-white p-6 rounded-xl shadow-md mb-8 border border-gray-200">
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-2xl font-semibold text-gray-800">
                 {editingDepartment ? 'Edit Department' : 'Add New Department'}

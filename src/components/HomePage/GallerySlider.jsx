@@ -127,7 +127,7 @@ export default function GallerySlider() {
               dynamicBullets: true,
             }}
             autoplay={{
-              delay: 4000,
+              delay: 1000,
               disableOnInteraction: false,
             }}
             loop={allImages.length > 4}

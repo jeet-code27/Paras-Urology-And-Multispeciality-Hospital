@@ -16,13 +16,13 @@ const EMPANELMENTS_COLLECTION = 'empanelments';
 
 /**
  * Get all empanelments
+ * Items with order will be sorted first, then items without order
  * @returns {Promise<{success: boolean, data?: Array, error?: string}>}
  */
 export const getEmpanelments = async () => {
   try {
     const empanelmentsRef = collection(db, EMPANELMENTS_COLLECTION);
-    const q = query(empanelmentsRef, orderBy('createdAt', 'desc'));
-    const querySnapshot = await getDocs(q);
+    const querySnapshot = await getDocs(empanelmentsRef);
     
     const empanelments = [];
     querySnapshot.forEach((doc) => {
@@ -30,6 +30,26 @@ export const getEmpanelments = async () => {
         id: doc.id,
         ...doc.data()
       });
+    });
+    
+    // Sort in memory: items with order first (sorted by order), then items without order (sorted by createdAt)
+    empanelments.sort((a, b) => {
+      // If both have order, sort by order
+      if (a.order !== undefined && b.order !== undefined) {
+        return a.order - b.order;
+      }
+      // If only a has order, a comes first
+      if (a.order !== undefined) {
+        return -1;
+      }
+      // If only b has order, b comes first
+      if (b.order !== undefined) {
+        return 1;
+      }
+      // Neither has order, sort by createdAt (newest first)
+      const aTime = a.createdAt?.toMillis ? a.createdAt.toMillis() : 0;
+      const bTime = b.createdAt?.toMillis ? b.createdAt.toMillis() : 0;
+      return bTime - aTime;
     });
     
     return { success: true, data: empanelments };
@@ -68,7 +88,7 @@ export const getEmpanelment = async (empanelmentId) => {
 
 /**
  * Add new empanelment
- * @param {Object} empanelmentData - Empanelment information
+ * @param {Object} empanelmentData - Empanelment information (order is optional)
  * @returns {Promise<{success: boolean, data?: Object, error?: string}>}
  */
 export const addEmpanelment = async (empanelmentData) => {
@@ -81,6 +101,11 @@ export const addEmpanelment = async (empanelmentData) => {
       createdAt: serverTimestamp(),
       updatedAt: serverTimestamp()
     };
+
+    // Convert order to number if provided
+    if (newEmpanelment.order !== undefined && newEmpanelment.order !== null && newEmpanelment.order !== '') {
+      newEmpanelment.order = Number(newEmpanelment.order);
+    }
     
     await setDoc(empanelmentRef, newEmpanelment);
     
@@ -111,6 +136,11 @@ export const updateEmpanelment = async (empanelmentId, empanelmentData) => {
       ...empanelmentData,
       updatedAt: serverTimestamp()
     };
+
+    // Convert order to number if provided
+    if (updatedEmpanelment.order !== undefined && updatedEmpanelment.order !== null && updatedEmpanelment.order !== '') {
+      updatedEmpanelment.order = Number(updatedEmpanelment.order);
+    }
     
     await setDoc(empanelmentRef, updatedEmpanelment, { merge: true });
     

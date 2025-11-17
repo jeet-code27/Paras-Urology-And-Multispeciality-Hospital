@@ -75,9 +75,6 @@ export default function EmpanelmentsPage() {
     { id: 'corporate', title: 'Corporate Empanelments', icon: Users },
   ];
 
-  // ─────────────────────────────────────────────
-  // Render
-  // ─────────────────────────────────────────────
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
       {/* Hero Section */}
@@ -200,69 +197,10 @@ export default function EmpanelmentsPage() {
           </div>
         )}
 
-        {/* Info Section */}
-        {/* {!loading && empanelments.length > 0 && (
-          <motion.div
-            className="mt-16 bg-gradient-to-r from-blue-600 to-blue-800 text-white rounded-xl p-8 md:p-12"
-            variants={fadeInUp}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, amount: 0.2 }}
-          >
-            <div className="max-w-3xl mx-auto text-center">
-              <h2 className="text-3xl font-bold mb-4">
-                Have Questions About Insurance Coverage?
-              </h2>
-              <p className="text-xl text-blue-100 mb-8">
-                Our team is here to help you understand your insurance benefits and cashless hospitalization process
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <button className="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors">
-                  Contact Insurance Desk
-                </button>
-                <button className="bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-900 transition-colors border-2 border-white">
-                  View All Services
-                </button>
-              </div>
-            </div>
-          </motion.div>
-        )} */}
+        
       </div>
 
-      {/* Trust Indicators */}
-      {/* {!loading && empanelments.length > 0 && (
-        <motion.div
-          className="bg-gray-100 py-16"
-          variants={fadeInUp}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.2 }}
-        >
-          <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-              <div>
-                <div className="text-4xl font-bold text-blue-600 mb-2">
-                  {getCategoryEmpanelments('government').length}+
-                </div>
-                <p className="text-gray-700 font-medium">Government Insurance & TPAs</p>
-              </div>
-              <div>
-                <div className="text-4xl font-bold text-green-600 mb-2">
-                  {getCategoryEmpanelments('private').length}+
-                </div>
-                <p className="text-gray-700 font-medium">Private Insurance Companies</p>
-              </div>
-              <div>
-                <div className="text-4xl font-bold text-purple-600 mb-2">
-                  {getCategoryEmpanelments('corporate').length}+
-                </div>
-                <p className="text-gray-700 font-medium">Corporate Partners</p>
-              </div>
-            </div>
-          </div>
-        </motion.div>
-      )} */}
-
+   
       {/* Lightbox Modal */}
       {lightboxImage && (
         <motion.div

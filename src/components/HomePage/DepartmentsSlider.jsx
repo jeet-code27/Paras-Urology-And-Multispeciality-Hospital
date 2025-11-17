@@ -212,7 +212,7 @@ export default function DepartmentsSlider() {
                   el: '.swiper-pagination-custom',
                 }}
                 autoplay={{
-                  delay: 5000,
+                  delay: 1000,
                   disableOnInteraction: false,
                 }}
                 loop={departments.length > 3}
