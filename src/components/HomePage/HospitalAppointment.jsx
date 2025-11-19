@@ -1,30 +1,9 @@
 "use client";
-import React, { useState } from "react";
-
+import React from "react";
 import Image from "next/image";
+import { Phone } from "lucide-react";
 
 export default function HospitalAppointment() {
-  const [formData, setFormData] = useState({
-    fullName: "",
-    email: "",
-    phone: "",
-    department: "",
-    message: "",
-  });
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Form submitted:", formData);
-    alert("Appointment request submitted!");
-  };
-
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
   return (
     <div className="w-full relative overflow-hidden py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto bg-white">
       {/* Background with gradient overlay */}
@@ -43,85 +22,62 @@ export default function HospitalAppointment() {
 
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
-          {/* Left Column - Form */}
+          {/* Left Column - Call to Action */}
           <div className="w-full">
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-8 leading-tight">
               Book Your Appointment at The Best Private Hospital in Ajmer
             </h1>
 
-            <div className="space-y-4">
-              <input
-                type="text"
-                name="fullName"
-                placeholder="Full Name*"
-                value={formData.fullName}
-                onChange={handleChange}
-                className="w-full px-4 py-3 bg-blue-800/40 border border-blue-600/50 rounded text-white placeholder-blue-300/70 focus:outline-none focus:border-blue-400 transition"
-              />
-
-              <input
-                type="email"
-                name="email"
-                placeholder="Email*"
-                value={formData.email}
-                onChange={handleChange}
-                className="w-full px-4 py-3 bg-blue-800/40 border border-blue-600/50 rounded text-white placeholder-blue-300/70 focus:outline-none focus:border-blue-400 transition"
-              />
-
-              <input
-                type="tel"
-                name="phone"
-                placeholder="Phone Number*"
-                value={formData.phone}
-                onChange={handleChange}
-                className="w-full px-4 py-3 bg-blue-800/40 border border-blue-600/50 rounded text-white placeholder-blue-300/70 focus:outline-none focus:border-blue-400 transition"
-              />
-
-              <select
-                name="department"
-                value={formData.department}
-                onChange={handleChange}
-                className="w-full px-4 py-3 bg-blue-800/40 border border-blue-600/50 rounded text-white focus:outline-none focus:border-blue-400 transition appearance-none cursor-pointer"
-              >
-                <option value="" className="bg-blue-900">
-                  Select Department*
-                </option>
-                <option value="cardiology" className="bg-blue-900">
-                  Cardiology
-                </option>
-                <option value="orthopedics" className="bg-blue-900">
-                  Orthopedics
-                </option>
-                <option value="neurology" className="bg-blue-900">
-                  Neurology
-                </option>
-                <option value="pediatrics" className="bg-blue-900">
-                  Pediatrics
-                </option>
-                <option value="general" className="bg-blue-900">
-                  General Medicine
-                </option>
-              </select>
-
-              <textarea
-                name="message"
-                placeholder="Message"
-                value={formData.message}
-                onChange={handleChange}
-                rows={4}
-                className="w-full px-4 py-3 bg-blue-800/40 border border-blue-600/50 rounded text-white placeholder-blue-300/70 focus:outline-none focus:border-blue-400 transition resize-none"
-              />
-
-              <button
-                onClick={handleSubmit}
-                className="bg-black text-white px-8 py-3 rounded font-semibold hover:bg-gray-900 transition duration-300 transform hover:scale-105"
-              >
-                Book An Appointment
-              </button>
+            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 shadow-2xl border border-white/20">
+              <div className="text-center space-y-6">
+                <div className="flex justify-center">
+                  <div className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center animate-pulse">
+                    <Phone className="w-10 h-10 text-white" />
+                  </div>
+                </div>
+                
+                <h2 className="text-2xl sm:text-3xl font-bold text-white">
+                  Call Now to Book Your Appointment
+                </h2>
+                
+                <a
+                  href="tel:+919521894263"
+                  className="inline-block bg-gradient-to-r from-green-500 to-green-600 text-white px-8 py-4 rounded-lg font-bold text-2xl sm:text-3xl hover:from-green-600 hover:to-green-700 transition duration-300 transform hover:scale-105 shadow-lg"
+                >
+                  +91-9521894263
+                </a>
+                
+                <p className="text-white/80 text-lg">
+                  Our team is ready to assist you 24/7
+                </p>
+              </div>
             </div>
+
+            {/* <div className="mt-8 bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20">
+              <h3 className="text-xl font-semibold text-white mb-4">
+                Why Choose Us?
+              </h3>
+              <ul className="space-y-3 text-white/90">
+                <li className="flex items-start">
+                  <span className="text-yellow-400 mr-3 mt-1">✓</span>
+                  <span>24/7 Emergency Services Available</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-yellow-400 mr-3 mt-1">✓</span>
+                  <span>Experienced Medical Professionals</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-yellow-400 mr-3 mt-1">✓</span>
+                  <span>State-of-the-Art Medical Equipment</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-yellow-400 mr-3 mt-1">✓</span>
+                  <span>Affordable & Quality Healthcare</span>
+                </li>
+              </ul>
+            </div> */}
           </div>
 
-          {/* Right Column - Timeline and Info */}
           {/* Right Column - Google Map and Info */}
           <div className="w-full space-y-6">
             {/* Google Map */}
@@ -150,7 +106,7 @@ export default function HospitalAppointment() {
                 <li className="flex items-start">
                   <span className="text-yellow-400 mr-3 mt-1">●</span>
                   <span className="text-sm sm:text-base">
-                    Empanelled with Mukhyamantri Ayushman Arogya Yojana (MAA) ,
+                    Empanelled with Mukhyamantri Ayushman Arogya Yojana (MAA),
                     Chiranjeevi Swasthya Bima Yojana, RGHS, ESIC, CGHS, ECHS,
                     Railways
                   </span>

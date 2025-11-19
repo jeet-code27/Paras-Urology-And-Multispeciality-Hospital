@@ -94,11 +94,11 @@ export default function Footer() {
               </a>
 
               <a
-                href="mailto:relationship@parashospital.com"
+                href="mailto:parasurologyhospital@gmail.com"
                 className="flex items-start gap-3 text-blue-100 hover:text-yellow-400 transition-colors duration-300 break-all"
               >
                 <Mail className="w-5 h-5 mt-0.5 text-yellow-400" />
-                <span className="text-sm">relationship@parashospital.com</span>
+                <span className="text-sm">parasurologyhospital@gmail.com</span>
               </a>
 
               <div className="flex items-start gap-3 text-blue-100">

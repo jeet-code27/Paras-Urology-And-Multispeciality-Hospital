@@ -130,10 +130,10 @@ export default function BookConsultationPage() {
                 <div className="bg-gray-50 rounded-lg p-4">
                   <p className="text-sm text-gray-500 mb-2">Email</p>
                   <a 
-                    href="mailto:relationship@parashospital.com" 
+                    href="mailto:parasurologyhospital@gmail.com" 
                     className="text-lg font-semibold text-blue-600 hover:text-blue-700"
                   >
-                    relationship@parashospital.com
+                    parasurologyhospital@gmail.com
                   </a>
                 </div>
               </div>

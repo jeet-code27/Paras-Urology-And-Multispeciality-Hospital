@@ -67,12 +67,12 @@ const Navigation = () => {
               <span className="lg:hidden">Call Us</span>
             </a>
             <a
-              href="mailto:relationship@parashospital.com"
+              href="mailto:parasurologyhospital@gmail.com"
               className="flex items-center gap-1.5 hover:text-blue-200 transition-colors"
             >
               <Mail size={14} className="lg:w-4 lg:h-4" />
               <span className="hidden xl:inline">
-                relationship@parashospital.com
+               parasurologyhospital@gmail.com
               </span>
               <span className="xl:hidden">Email</span>
             </a>
@@ -286,12 +286,12 @@ const Navigation = () => {
                     <span className="text-sm">+91-9521894263</span>
                   </a>
                   <a
-                    href="mailto:relationship@parashospital.com"
+                    href="mailto:parasurologyhospital@gmail.com"
                     className="flex items-center gap-2 text-gray-700 hover:text-blue-700 transition-colors"
                   >
                     <Mail size={18} />
                     <span className="text-sm">
-                      relationship@parashospital.com
+                      parasurologyhospital@gmail.com
                     </span>
                   </a>
                 </div>
