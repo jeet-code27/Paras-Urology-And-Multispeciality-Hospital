@@ -83,13 +83,15 @@ const Navigation = () => {
               href="https://www.facebook.com/PUMHAJMER/"
               className="hover:text-blue-200 transition-colors"
               aria-label="Facebook"
+              target="_blank"
             >
               <Facebook size={16} className="lg:w-[18px] lg:h-[18px]" />
             </a>
             <a
-              href="#"
+              href="https://www.instagram.com/parasurology"
               className="hover:text-blue-200 transition-colors"
               aria-label="Instagram"
+              target="_blank"
             >
               <Instagram size={16} className="lg:w-[18px] lg:h-[18px]" />
             </a>
@@ -97,6 +99,7 @@ const Navigation = () => {
               href="https://www.youtube.com/channel/UC3Oq_C_ae5qQqiflY0h30Kw"
               className="hover:text-blue-200 transition-colors"
               aria-label="Youtube"
+              target="_blank"
             >
               <Youtube size={16} className="lg:w-[18px] lg:h-[18px]" />
             </a>
@@ -164,7 +167,7 @@ const Navigation = () => {
 
               <Link
                 href="/book-appointment"
-                className="relative overflow-hidden bg-blue-700 text-white px-4 xl:px-6 py-2 rounded-lg font-medium text-sm xl:text-base whitespace-nowrap 
+                className="relative overflow-hidden bg-[#002b4a] text-white px-4 xl:px-6 py-2 rounded-lg font-medium text-sm xl:text-base whitespace-nowrap 
   transition-all duration-300 hover:shadow-lg"
               >
                 <span className="relative z-10">Book Appointment</span>
@@ -181,7 +184,7 @@ const Navigation = () => {
             <div className="flex items-center gap-2 lg:hidden">
               <Link
                 href="/book-appointment"
-                className="bg-blue-700 text-white px-3 py-1.5 md:px-4 md:py-2 rounded-lg hover:bg-blue-800 font-medium transition-all text-xs md:text-sm whitespace-nowrap"
+                className="bg-[#002b4a] text-white px-3 py-1.5 md:px-4 md:py-2 rounded-lg hover:bg-blue-800 font-medium transition-all text-xs md:text-sm whitespace-nowrap"
               >
                 Book
               </Link>
@@ -211,7 +214,7 @@ const Navigation = () => {
           >
             <div className="flex flex-col h-full">
               {/* Mobile Menu Header */}
-              <div className="flex justify-between items-center p-4 border-b bg-blue-700 text-white">
+              <div className="flex justify-between items-center p-4 border-b bg-[#002b4a] text-white">
                 <h2 className="font-semibold text-lg">Menu</h2>
                 <button
                   onClick={closeMobileMenu}
@@ -294,23 +297,26 @@ const Navigation = () => {
                 </div>
                 <div className="flex items-center justify-center gap-4 mb-3">
                   <a
-                    href="#"
+                    href="https://www.facebook.com/PUMHAJMER/"
                     className="text-blue-700 hover:text-blue-900 transition-colors"
                     aria-label="Facebook"
+                    target="_blank"
                   >
                     <Facebook size={20} />
                   </a>
                   <a
-                    href="#"
+                    href="https://www.instagram.com/parasurology"
                     className="text-blue-700 hover:text-blue-900 transition-colors"
                     aria-label="Instagram"
+                    target="_blank"
                   >
                     <Instagram size={20} />
                   </a>
                   <a
-                    href="#"
+                    href="https://www.youtube.com/channel/UC3Oq_C_ae5qQqiflY0h30Kw"
                     className="text-blue-700 hover:text-blue-900 transition-colors"
                     aria-label="Youtube"
+                    target="_blank"
                   >
                     <Youtube size={20} />
                   </a>

@@ -64,11 +64,11 @@ export default function DoctorsSlider() {
           transition={{ duration: 0.8, ease: 'easeOut' }}
           viewport={{ once: true }}
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-blue-900 mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold text-[#002b4a] mb-4">
             Meet Doctors from Top Hospital of Ajmer
           </h2>
           <motion.div
-            className="w-24 h-1 bg-blue-600 mx-auto"
+            className="w-24 h-1 bg-[#002b4a] mx-auto"
             initial={{ scaleX: 0 }}
             whileInView={{ scaleX: 1 }}
             transition={{ delay: 0.3, duration: 0.6, ease: 'easeOut' }}
@@ -132,7 +132,7 @@ export default function DoctorsSlider() {
               {doctors.map((doctor, i) => (
                 <SwiperSlide key={doctor.id}>
                   <motion.div
-                    className="bg-white rounded-lg shadow-lg overflow-hidden border-t-4 border-blue-600 hover:shadow-xl transition-shadow duration-300"
+                    className="bg-white rounded-lg shadow-lg overflow-hidden border-t-4 border-[#002b4a] hover:shadow-xl transition-shadow duration-300"
                     initial={{ opacity: 0, scale: 0.9 }}
                     whileInView={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.6, delay: i * 0.1, ease: 'easeOut' }}
@@ -157,7 +157,7 @@ export default function DoctorsSlider() {
                       {/* Doctor Info */}
                       <div className="p-6 text-center">
                         <h3 className="text-xl font-bold text-gray-800 mb-2">{doctor.name}</h3>
-                        <p className="text-blue-600 font-medium text-sm mb-3">
+                        <p className="text-green-600 font-medium text-sm mb-3">
                           {doctor.education}
                         </p>
                         {doctor.expertise && (

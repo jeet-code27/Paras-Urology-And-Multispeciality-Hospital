@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 export default function DirectorSection() {
   return (
-    <section className="grid grid-cols-1 lg:grid-cols-2 bg-gradient-to-br from-blue-700 to-blue-900">
+    <section className="grid grid-cols-1 lg:grid-cols-2 bg-[#002b4a]">
       
       {/* Left Side - Director Image */}
       <div className="relative min-h-[450px] lg:min-h-[600px] flex items-center justify-center p-8 lg:p-12">

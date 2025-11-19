@@ -80,7 +80,7 @@ export default function DepartmentsSlider() {
           )}
 
           {/* Title bar at bottom of image */}
-          <div className="absolute bottom-0 left-0 right-0 bg-blue-700 p-4">
+          <div className="absolute bottom-0 left-0 right-0 bg-[#002b4a] p-4">
             <h3 className="text-xl font-bold text-white">
               {department.title}
             </h3>
@@ -93,7 +93,7 @@ export default function DepartmentsSlider() {
             {department.description}
           </p>
 
-          <button className="text-blue-600 text-sm font-semibold flex items-center gap-2 hover:gap-3 transition-all">
+          <button className="text-green-400 text-sm font-semibold flex items-center gap-2 hover:gap-3 transition-all">
             Know More
             <span>→</span>
           </button>
@@ -163,12 +163,12 @@ export default function DepartmentsSlider() {
             viewport={{ once: true }}
           >
             
-            <h2 className="text-4xl md:text-5xl font-bold text-[#1C398E] mb-4">
+            <h2 className="text-4xl md:text-5xl font-bold text-[#002b4a] mb-4">
               Our Medical Departments
             </h2>
            
             <motion.div
-              className="w-24 h-1 bg-blue-600 mx-auto mt-6"
+              className="w-24 h-1 bg-[#002b4a] mx-auto mt-6"
               initial={{ scaleX: 0 }}
               whileInView={{ scaleX: 1 }}
               transition={{ delay: 0.3, duration: 0.6, ease: 'easeOut' }}
@@ -237,11 +237,11 @@ export default function DepartmentsSlider() {
               </Swiper>
 
               {/* Custom Navigation Buttons */}
-              <button className="swiper-button-prev-custom absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full p-3 shadow-lg hover:bg-blue-600 hover:text-white transition-colors duration-300 group">
-                <ChevronLeft className="w-6 h-6 text-blue-600 group-hover:text-white" />
+              <button className="swiper-button-prev-custom absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full p-3 shadow-lg hover:bg-[#002b4a] hover:text-white transition-colors duration-300 group">
+                <ChevronLeft className="w-6 h-6 text-[#002b4a] group-hover:text-white" />
               </button>
-              <button className="swiper-button-next-custom absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full p-3 shadow-lg hover:bg-blue-600 hover:text-white transition-colors duration-300 group">
-                <ChevronRight className="w-6 h-6 text-blue-600 group-hover:text-white" />
+              <button className="swiper-button-next-custom absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full p-3 shadow-lg hover:bg-[#002b4a] hover:text-white transition-colors duration-300 group">
+                <ChevronRight className="w-6 h-6 text-[#002b4a] group-hover:text-white" />
               </button>
 
               {/* Custom Pagination */}
@@ -264,7 +264,7 @@ export default function DepartmentsSlider() {
         .swiper-pagination-custom .swiper-pagination-bullet-active {
           width: 32px;
           border-radius: 6px;
-          background: #2563eb;
+          background: #002b4a;
         }
 
         .departments-swiper {

@@ -32,7 +32,7 @@ const OtherHeroSection = ({ title, imageUrl, imageAlt = "Hero background" }) => 
         {/* Constrain content width and center it, matching typical page layouts */}
         <div className="max-w-8xl w-full mx-auto px-4 sm:px-6 lg:px-8">
           {/* The blue title box, aligned to the left of the content area */}
-          <div className="bg-blue-700 py-4 px-6 md:py-5 md:px-8 rounded-md shadow-lg inline-block">
+          <div className="bg-[#002b4a] py-4 px-6 md:py-5 md:px-8 rounded-md shadow-lg inline-block">
             <h1 className="text-white text-2xl md:text-3xl lg:text-4xl font-bold">
               {title}
             </h1>

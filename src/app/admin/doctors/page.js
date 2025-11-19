@@ -13,11 +13,9 @@ export default function DoctorManagementPanel() {
   const [editingDoctor, setEditingDoctor] = useState(null);
   const [uploading, setUploading] = useState(false);
 
-  // FINAL formData includes displayOrder
   const [formData, setFormData] = useState({
     name: '',
     education: '',
-    college: '',
     experience: '',
     expertise: '',
     achievements: '',
@@ -25,7 +23,7 @@ export default function DoctorManagementPanel() {
     timing: '',
     memberships: '',
     imageUrl: '',
-    displayOrder: 0,        // ✅ new field
+    displayOrder: 0,
   });
 
   const [imageFile, setImageFile] = useState(null);
@@ -75,7 +73,6 @@ export default function DoctorManagementPanel() {
     setFormData({
       name: '',
       education: '',
-      college: '',
       experience: '',
       expertise: '',
       achievements: '',
@@ -92,10 +89,9 @@ export default function DoctorManagementPanel() {
   };
 
   const handleSubmit = async () => {
-    if (!formData.name || !formData.education || !formData.college || 
-        !formData.experience || !formData.expertise || !formData.timing || 
-        !formData.achievements) {
-      toast.error('Please fill all required fields');
+    // Only validate doctor name as required
+    if (!formData.name || !formData.name.trim()) {
+      toast.error('Please enter doctor name');
       return;
     }
 
@@ -130,11 +126,9 @@ export default function DoctorManagementPanel() {
         }
       }
 
-      // FINAL doctorData includes displayOrder
       const doctorData = {
         name: formData.name.trim(),
         education: formData.education.trim(),
-        college: formData.college.trim(),
         experience: formData.experience.trim(),
         expertise: formData.expertise.trim(),
         achievements: formData.achievements.trim(),
@@ -145,7 +139,7 @@ export default function DoctorManagementPanel() {
           .map(m => m.trim())
           .filter(m => m.length > 0),
         imageUrl,
-        displayOrder: Number(formData.displayOrder) || 0,  // ✅ NEW
+        displayOrder: Number(formData.displayOrder) || 0,
       };
 
       let result;
@@ -177,7 +171,6 @@ export default function DoctorManagementPanel() {
     setFormData({
       name: doctor.name || '',
       education: doctor.education || '',
-      college: doctor.college || '',
       experience: doctor.experience || '',
       expertise: doctor.expertise || '',
       achievements: doctor.achievements || '',
@@ -187,7 +180,7 @@ export default function DoctorManagementPanel() {
         ? doctor.memberships.join('\n')
         : (doctor.memberships || ''),
       imageUrl: doctor.imageUrl || '',
-      displayOrder: doctor.displayOrder ?? 0,   // ✅ load existing
+      displayOrder: doctor.displayOrder ?? 0,
     });
     setImagePreview(doctor.imageUrl || '');
     setShowForm(true);
@@ -263,7 +256,7 @@ export default function DoctorManagementPanel() {
               {/* 2 Column Grid */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-                {/* Doctor Name */}
+                {/* Doctor Name - ONLY REQUIRED FIELD */}
                 <div>
                   <label className="block text-sm font-medium mb-2">Doctor Name *</label>
                   <input
@@ -279,7 +272,7 @@ export default function DoctorManagementPanel() {
 
                 {/* Education */}
                 <div>
-                  <label className="block text-sm font-medium mb-2">Education *</label>
+                  <label className="block text-sm font-medium mb-2">Education</label>
                   <input
                     type="text"
                     name="education"
@@ -291,23 +284,9 @@ export default function DoctorManagementPanel() {
                   />
                 </div>
 
-                {/* College */}
-                <div>
-                  <label className="block text-sm font-medium mb-2">College *</label>
-                  <input
-                    type="text"
-                    name="college"
-                    value={formData.college}
-                    onChange={handleInputChange}
-                    disabled={uploading}
-                    className="w-full px-4 py-2 border rounded-lg"
-                    placeholder="SMS Medical College"
-                  />
-                </div>
-
                 {/* Experience */}
                 <div>
-                  <label className="block text-sm font-medium mb-2">Experience *</label>
+                  <label className="block text-sm font-medium mb-2">Experience</label>
                   <input
                     type="text"
                     name="experience"
@@ -321,7 +300,7 @@ export default function DoctorManagementPanel() {
 
                 {/* Expertise */}
                 <div>
-                  <label className="block text-sm font-medium mb-2">Expertise *</label>
+                  <label className="block text-sm font-medium mb-2">Expertise</label>
                   <input
                     type="text"
                     name="expertise"
@@ -335,7 +314,7 @@ export default function DoctorManagementPanel() {
 
                 {/* Timing */}
                 <div>
-                  <label className="block text-sm font-medium mb-2">Timing *</label>
+                  <label className="block text-sm font-medium mb-2">Timing</label>
                   <input
                     type="text"
                     name="timing"
@@ -347,10 +326,10 @@ export default function DoctorManagementPanel() {
                   />
                 </div>
 
-                {/* Sort Order  */}
+                {/* Sort Order */}
                 <div>
                   <label className="block text-sm font-medium mb-2">
-                    Sort Order (Lower = First) *
+                    Sort Order (Lower = First)
                   </label>
                   <input
                     type="number"
@@ -367,7 +346,7 @@ export default function DoctorManagementPanel() {
 
               {/* Achievements */}
               <div>
-                <label className="block text-sm font-medium mb-2">Achievements *</label>
+                <label className="block text-sm font-medium mb-2">Achievements</label>
                 <input
                   type="text"
                   name="achievements"
@@ -381,7 +360,7 @@ export default function DoctorManagementPanel() {
 
               {/* About */}
               <div>
-                <label className="block text-sm font-medium mb-2">About (Optional)</label>
+                <label className="block text-sm font-medium mb-2">About</label>
                 <textarea
                   name="about"
                   value={formData.about}
@@ -412,7 +391,7 @@ export default function DoctorManagementPanel() {
               {/* Image Upload */}
               <div>
                 <label className="block text-sm font-medium mb-2">
-                  Doctor Image * {editingDoctor && '(Upload new to replace)'}
+                  Doctor Image {editingDoctor && '(Upload new to replace)'}
                 </label>
 
                 {imagePreview && (
@@ -477,12 +456,10 @@ export default function DoctorManagementPanel() {
 
                 <div className="p-4">
                   <h3 className="text-xl font-semibold">{doctor.name}</h3>
-                  <p className="text-sm text-blue-600 mb-3">{doctor.education}</p>
-                  <p className="text-sm"><b>College:</b> {doctor.college}</p>
-                  <p className="text-sm"><b>Experience:</b> {doctor.experience}</p>
-                  <p className="text-sm"><b>Expertise:</b> {doctor.expertise}</p>
+                  {doctor.education && <p className="text-sm text-blue-600 mb-3">{doctor.education}</p>}
+                  {doctor.experience && <p className="text-sm"><b>Experience:</b> {doctor.experience}</p>}
+                  {doctor.expertise && <p className="text-sm"><b>Expertise:</b> {doctor.expertise}</p>}
 
-                  {/* display order display */}
                   <p className="text-xs mt-2 text-gray-500">Display Order: {doctor.displayOrder}</p>
 
                   <div className="flex gap-2 mt-4">

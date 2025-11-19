@@ -21,15 +21,14 @@ export default function Footer() {
     { name: "Our Doctors", href: "/doctors" },
     { name: "Departments", href: "/departments" },
     { name: "Empanelments", href: "/our-empanelment" },
-    { name: "Contact Us", href: "/contact" },
     { name: "Gallery", href: "/gallery" },
   ];
 
   const socialLinks = [
     { icon: Facebook, href: "https://www.facebook.com/PUMHAJMER/", label: "Facebook" },
-    { icon: Instagram, href: "https://instagram.com", label: "Instagram" },
+    { icon: Instagram, href: "https://www.instagram.com/parasurology", label: "Instagram" },
     { icon: Youtube, href: "https://www.youtube.com/channel/UC3Oq_C_ae5qQqiflY0h30Kw", label: "YouTube" },
-    { icon: Twitter, href: "https://twitter.com", label: "Twitter" },
+    // { icon: Twitter, href: "https://twitter.com", label: "Twitter" },
   ];
 
   return (
@@ -153,7 +152,7 @@ export default function Footer() {
       {/* Copyright */}
       <div className="bg-blue-950 border-t border-blue-800/60 text-center py-4">
         <p className="text-sm text-blue-200">
-          © {currentYear} Paras Hospital. All Rights Reserved.
+          © {currentYear}, Powered by <a href="https://seocialmedia.in/" target="_blank" className="text-green-400"> SEOcial Media Solutions</a>
         </p>
       </div>
 
@@ -183,7 +182,7 @@ export default function Footer() {
         </a>
 
         <Link
-          href="/appointment"
+          href="/book-appointment"
           className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white px-4 py-3 rounded-full shadow-lg transition-all duration-300 hover:scale-110 text-sm font-semibold text-center whitespace-nowrap"
         >
           Book Appointment

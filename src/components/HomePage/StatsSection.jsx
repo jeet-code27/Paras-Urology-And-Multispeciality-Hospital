@@ -22,10 +22,10 @@ const StatsSection = () => {
   ];
 
   const actions = [
-    { icon: <Package className="w-8 h-8 text-blue-600" />, label: 'Our Departments', href: '/departments' },
-    { icon: <MessageSquare className="w-8 h-8 text-blue-600" />, label: 'Feedback', href: 'https://www.google.com/search?sca_esv=5288266b91241921&sxsrf=AE3TifMFTYqVKXBPKhBYXtcWBdHeQ2fToA:1763098452196&si=AMgyJEtREmoPL4P1I5IDCfuA8gybfVI2d5Uj7QMwYCZHKDZ-E-D_f1vpph5A5OU9IaAPsCO2Qn8La5iKqQtekkTBzLot9QK1DWBFBdLCL0EC1Jocj4WedRqtvN_t9wSBm29F9F5odgtzZS4QP_v5oFlsTmDNR_AwnzRN_3oVDSQTVx59zO6K1jMc8w0Ufx6T_rTU9xZwSvdYJ3mT_sS1DJPH-kTwhSmMiiRp1DSzCdZe3v1q6cM7t7pizitf1bjhllrbGWrh7_pmvEWhoeTn7EbrdkA-7rgN1Q%3D%3D&q=Dr+Rajkumar+Khasgiwala+%28Paras+Urology+And+Multispeciality+Hospital%29+-+Urologist+in+Ajmer/Kidney+Stone/Prostate/Andrologist+Reviews&sa=X&ved=2ahUKEwjG28nH9fCQAxXzRmwGHcPyMScQ0bkNegQIIhAE&biw=1920&bih=869&dpr=1#lrd=0x396be73e8a3211ef:0x7ac5154a134f812e,3,,,,' },
-    { icon: <GalleryThumbnails className="w-8 h-8 text-blue-600" />, label: 'Gallery', href: '/gallery' },
-    { icon: <FileText className="w-8 h-8 text-blue-600" />, label: 'Our Empanelment', href: '/our-empanelment' }
+    { icon: <Package className="w-8 h-8 text-green-400" />, label: 'Our Departments', href: '/departments' },
+    { icon: <MessageSquare className="w-8 h-8 text-green-400" />, label: 'Feedback', href: 'https://www.google.com/search?sca_esv=5288266b91241921&sxsrf=AE3TifMFTYqVKXBPKhBYXtcWBdHeQ2fToA:1763098452196&si=AMgyJEtREmoPL4P1I5IDCfuA8gybfVI2d5Uj7QMwYCZHKDZ-E-D_f1vpph5A5OU9IaAPsCO2Qn8La5iKqQtekkTBzLot9QK1DWBFBdLCL0EC1Jocj4WedRqtvN_t9wSBm29F9F5odgtzZS4QP_v5oFlsTmDNR_AwnzRN_3oVDSQTVx59zO6K1jMc8w0Ufx6T_rTU9xZwSvdYJ3mT_sS1DJPH-kTwhSmMiiRp1DSzCdZe3v1q6cM7t7pizitf1bjhllrbGWrh7_pmvEWhoeTn7EbrdkA-7rgN1Q%3D%3D&q=Dr+Rajkumar+Khasgiwala+%28Paras+Urology+And+Multispeciality+Hospital%29+-+Urologist+in+Ajmer/Kidney+Stone/Prostate/Andrologist+Reviews&sa=X&ved=2ahUKEwjG28nH9fCQAxXzRmwGHcPyMScQ0bkNegQIIhAE&biw=1920&bih=869&dpr=1#lrd=0x396be73e8a3211ef:0x7ac5154a134f812e,3,,,,' },
+    { icon: <GalleryThumbnails className="w-8 h-8 text-green-400" />, label: 'Gallery', href: '/gallery' },
+    { icon: <FileText className="w-8 h-8 text-green-400" />, label: 'Our Empanelment', href: '/our-empanelment' }
   ];
 
   return (
@@ -52,7 +52,7 @@ const StatsSection = () => {
               transition={{ duration: 0.6, ease: 'easeOut' }}
               className="bg-white rounded-lg shadow-md px-8 py-6 text-center min-w-[200px]"
             >
-              <h3 className="text-3xl font-bold text-blue-700 mb-2">{stat.number}</h3>
+              <h3 className="text-3xl font-bold text-green-700 mb-2">{stat.number}</h3>
               <p className="text-gray-700 font-medium">{stat.label}</p>
             </motion.div>
           ))}
@@ -84,7 +84,7 @@ const StatsSection = () => {
               transition={{ duration: 0.6, ease: 'easeOut' }}
               className="bg-white rounded-lg shadow-md px-8 py-6 text-center min-w-[200px]"
             >
-              <h3 className="text-3xl font-bold text-blue-700 mb-2">{stat.number}</h3>
+              <h3 className="text-3xl font-bold text-green-700 mb-2">{stat.number}</h3>
               <p className="text-gray-700 font-medium">{stat.label}</p>
             </motion.div>
           ))}

@@ -173,22 +173,16 @@ export default function AllDoctorsPage() {
                       {/* Content */}
                       <div className="p-6 flex-1 flex flex-col">
                         <div className="space-y-3 mb-4 flex-1">
+                          
                           <div className="flex items-start gap-2">
-                            <BookOpen className="w-5 h-5 text-blue-600 mt-1 flex-shrink-0" />
-                            <div className="flex-1 min-w-0">
-                              <p className="text-sm text-gray-600">College</p>
-                              <p className="font-medium text-gray-800 line-clamp-2">{doctor.college}</p>
-                            </div>
-                          </div>
-                          <div className="flex items-start gap-2">
-                            <Award className="w-5 h-5 text-blue-600 mt-1 flex-shrink-0" />
+                            <Award className="w-5 h-5 text-green-600 mt-1 flex-shrink-0" />
                             <div className="flex-1 min-w-0">
                               <p className="text-sm text-gray-600">Experience</p>
                               <p className="font-medium text-gray-800">{doctor.experience}</p>
                             </div>
                           </div>
                           <div className="flex items-start gap-2">
-                            <Clock className="w-5 h-5 text-blue-600 mt-1 flex-shrink-0" />
+                            <Clock className="w-5 h-5 text-green-600 mt-1 flex-shrink-0" />
                             <div className="flex-1 min-w-0">
                               <p className="text-sm text-gray-600">Expertise</p>
                               <p className="font-medium text-gray-800 line-clamp-2">{doctor.expertise}</p>
@@ -197,7 +191,7 @@ export default function AllDoctorsPage() {
                         </div>
 
                         <div className="pt-4 border-t border-gray-200">
-                          <div className="flex items-center justify-between text-blue-600 font-semibold group">
+                          <div className="flex items-center justify-between text-green-600 font-semibold group">
                             <span>View Full Profile</span>
                             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                           </div>

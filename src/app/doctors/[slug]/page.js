@@ -44,9 +44,9 @@ export default function SingleDoctorPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-blue-50 to-white">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-green-50 to-white">
         <div className="text-center">
-          <Loader2 className="w-12 h-12 text-blue-600 animate-spin mx-auto mb-4" />
+          <Loader2 className="w-12 h-12 text-green-600 animate-spin mx-auto mb-4" />
           <p className="text-gray-600">Loading doctor profile...</p>
         </div>
       </div>
@@ -58,7 +58,7 @@ export default function SingleDoctorPage() {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-blue-50 to-white"
+        className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-green-50 to-white"
       >
         <User className="w-20 h-20 text-gray-300 mb-4" />
         <h1 className="text-3xl font-bold text-gray-800 mb-2">
@@ -69,7 +69,7 @@ export default function SingleDoctorPage() {
         </p>
         <Link
           href="/doctors"
-          className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold flex items-center gap-2"
+          className="bg-green-600 text-white px-8 py-3 rounded-lg hover:bg-green-700 transition-colors font-semibold flex items-center gap-2"
         >
           <ArrowLeft className="w-5 h-5" />
           Back to All Doctors
@@ -80,19 +80,19 @@ export default function SingleDoctorPage() {
 
   return (
     <motion.div
-      className="min-h-screen bg-gradient-to-b from-blue-50 to-white"
+      className="min-h-screen bg-gradient-to-b from-green-50 to-white"
       initial="hidden"
       animate="show"
     >
       {/* Header */}
       <motion.div
-        className="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-8"
+        className="bg-[#002b4a] text-white py-8"
         variants={fadeInUp}
       >
         <div className="container mx-auto px-4">
           <Link
             href="/doctors"
-            className="inline-flex items-center gap-2 text-white hover:text-blue-200 transition-colors mb-4"
+            className="inline-flex items-center gap-2 text-white hover:text-blue-200 transition-colors mb-2 pt-6"
           >
             <ArrowLeft className="w-5 h-5" />
             <span className="font-medium">Back to All Doctors</span>
@@ -118,7 +118,7 @@ export default function SingleDoctorPage() {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <div className="bg-gradient-to-br from-blue-600 to-blue-800 rounded-xl p-6 text-white sticky top-8">
+              <div className="bg-[#002b4a] rounded-xl p-6 text-white sticky top-8">
                 <motion.div
                   className="bg-white rounded-lg p-4 mb-6"
                   initial={{ opacity: 0, scale: 0.9 }}
@@ -133,14 +133,14 @@ export default function SingleDoctorPage() {
                       className="w-full h-64 object-cover rounded-lg"
                     />
                   ) : (
-                    <div className="w-full h-64 bg-blue-100 rounded-lg flex items-center justify-center">
-                      <User className="w-24 h-24 text-blue-400" />
+                    <div className="w-full h-64 bg-green-100 rounded-lg flex items-center justify-center">
+                      <User className="w-24 h-24 text-green-400" />
                     </div>
                   )}
                 </motion.div>
 
                 <h1 className="text-2xl font-bold mb-2">{doctor.name}</h1>
-                <p className="text-blue-200 mb-6 text-lg">{doctor.education}</p>
+                <p className="text-green-200 mb-6 text-lg">{doctor.education}</p>
 
                 <motion.div
                   className="bg-blue-700 rounded-lg p-4 mb-6"
@@ -153,17 +153,21 @@ export default function SingleDoctorPage() {
                     <Clock className="w-5 h-5" />
                     <h3 className="font-semibold">OPD Timing</h3>
                   </div>
-                  <p className="text-sm text-blue-100">{doctor.timing}</p>
+                  <p className="text-sm text-green-100">{doctor.timing}</p>
                 </motion.div>
 
                 <div className="space-y-3">
+                  <Link href={"/book-appointment"}>
                   <motion.button
                     whileHover={{ scale: 1.05 }}
-                    className="w-full bg-white text-blue-600 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors flex items-center justify-center gap-2"
+                    className="w-full bg-white text-blue-600 py-3 rounded-lg font-semibold hover:bg-green-50 transition-colors flex items-center justify-center gap-2 mb-4"
                   >
                     <Calendar className="w-5 h-5" />
                     Book Appointment
                   </motion.button>
+                  </Link>
+
+                  <Link href={"tel:+919521894263"}>
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     className="w-full bg-blue-700 text-white py-3 rounded-lg font-semibold hover:bg-blue-800 transition-colors flex items-center justify-center gap-2"
@@ -171,6 +175,7 @@ export default function SingleDoctorPage() {
                     <Phone className="w-5 h-5" />
                     Call Now
                   </motion.button>
+                  </Link>
                 </div>
               </div>
             </motion.div>
@@ -196,13 +201,7 @@ export default function SingleDoctorPage() {
                       </p>
                       <p className="font-semibold text-gray-800">{doctor.education}</p>
                     </div>
-                    <div className="bg-white rounded-lg p-4">
-                      <p className="text-sm text-gray-600 mb-1 flex items-center gap-2">
-                        <BookOpen className="w-4 h-4 text-blue-600" />
-                        College
-                      </p>
-                      <p className="font-semibold text-gray-800">{doctor.college}</p>
-                    </div>
+                 
                     <div className="bg-white rounded-lg p-4">
                       <p className="text-sm text-gray-600 mb-1 flex items-center gap-2">
                         <Award className="w-4 h-4 text-blue-600" />
@@ -269,14 +268,14 @@ export default function SingleDoctorPage() {
                   <h2 className="text-3xl font-bold text-gray-800 mb-6 border-b-4 border-blue-600 inline-block pb-2">
                     Memberships
                   </h2>
-                  <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg p-6">
+                  <div className="bg-gradient-to-br from-green-50 to-indigo-50 rounded-lg p-6">
                     <ul className="space-y-3">
                       {doctor.memberships.map((membership, index) => (
                         <li
                           key={index}
                           className="flex items-start gap-3 bg-white rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow"
                         >
-                          <div className="bg-blue-600 rounded-full p-1.5 mt-1 flex-shrink-0">
+                          <div className="bg-green-600 rounded-full p-1.5 mt-1 flex-shrink-0">
                             <div className="w-2 h-2 bg-white rounded-full"></div>
                           </div>
                           <span className="text-gray-700 flex-1">{membership}</span>
@@ -289,7 +288,7 @@ export default function SingleDoctorPage() {
 
               {/* CTA */}
               <motion.div
-                className="bg-gradient-to-r from-blue-600 to-blue-800 text-white rounded-xl p-8"
+                className="bg-[#002b4a] text-white rounded-xl p-8"
                 variants={fadeInUp}
                 initial="hidden"
                 whileInView="show"
@@ -302,6 +301,7 @@ export default function SingleDoctorPage() {
                   Get expert medical care from {doctor.name}. Our team is here to help you schedule your consultation.
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <Link href={"/book-appointment"}>
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     className="bg-white text-blue-600 py-3 px-6 rounded-lg font-semibold hover:bg-blue-50 transition-colors flex items-center justify-center gap-2"
@@ -309,6 +309,8 @@ export default function SingleDoctorPage() {
                     <Calendar className="w-5 h-5" />
                     Book Appointment
                   </motion.button>
+                  </Link>
+                   <Link href={"tel:+919521894263"}>
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     className="bg-blue-700 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-800 transition-colors flex items-center justify-center gap-2"
@@ -316,13 +318,14 @@ export default function SingleDoctorPage() {
                     <Phone className="w-5 h-5" />
                     Contact Hospital
                   </motion.button>
+                  </Link>
                 </div>
               </motion.div>
 
               <div className="pt-6 border-t border-gray-200">
                 <Link
                   href="/doctors"
-                  className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-semibold transition-colors"
+                  className="inline-flex items-center gap-2 text-green-600 hover:text-green-700 font-semibold transition-colors"
                 >
                   <ArrowLeft className="w-5 h-5" />
                   View All Doctors

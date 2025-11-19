@@ -33,7 +33,7 @@ const AboutSection = () => {
             </h3>
             
             <motion.h2
-              className="text-red-600 text-3xl lg:text-4xl font-bold mb-6 leading-tight"
+              className="text-green-600 text-3xl lg:text-4xl font-bold mb-6 leading-tight"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.8 }}

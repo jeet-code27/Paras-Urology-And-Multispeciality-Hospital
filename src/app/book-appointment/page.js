@@ -82,6 +82,7 @@ export default function BookConsultationPage() {
               <p className="text-xl text-blue-100 mb-8">
                 Our friendly staff is available to help you schedule an appointment at your convenience
               </p>
+              
               <button 
                 onClick={handleCall}
                 className="bg-white text-blue-600 px-12 py-5 rounded-full text-2xl font-bold hover:bg-blue-50 transition-all transform hover:scale-105 shadow-xl"
@@ -93,27 +94,22 @@ export default function BookConsultationPage() {
           </div>
 
           {/* Information Cards */}
-          <div className="grid md:grid-cols-2 gap-8 mb-16">
-            {/* Working Hours */}
+         <div className="grid md:grid-cols-2 gap-8 mb-16">
+            {/* 24/7 Availability */}
             <div className="bg-white rounded-2xl shadow-lg p-8">
               <div className="flex items-center gap-4 mb-6">
                 <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center">
                   <Clock className="w-8 h-8 text-blue-600" />
                 </div>
-                <h3 className="text-2xl font-bold text-gray-800">Working Hours</h3>
+                <h3 className="text-2xl font-bold text-gray-800">Availability</h3>
               </div>
               <div className="space-y-4">
-                <div className="flex justify-between items-center py-3 border-b border-gray-100">
-                  <span className="text-gray-600 font-medium">Monday - Friday:</span>
-                  <span className="text-gray-800 font-bold">9:00 AM - 6:00 PM</span>
-                </div>
-                <div className="flex justify-between items-center py-3 border-b border-gray-100">
-                  <span className="text-gray-600 font-medium">Saturday:</span>
-                  <span className="text-gray-800 font-bold">9:00 AM - 2:00 PM</span>
-                </div>
-                <div className="flex justify-between items-center py-3">
-                  <span className="text-gray-600 font-medium">Sunday:</span>
-                  <span className="text-red-600 font-bold">Closed</span>
+                <div className="text-center py-8">
+                  <div className="inline-block bg-gradient-to-r from-blue-500 to-green-500 text-white px-8 py-4 rounded-full mb-4">
+                    <span className="text-3xl font-bold">24/7</span>
+                  </div>
+                  <p className="text-gray-600 text-lg font-medium">Open All Day, Every Day</p>
+                  <p className="text-gray-500 mt-2">We're here for you around the clock</p>
                 </div>
               </div>
             </div>
@@ -143,7 +139,6 @@ export default function BookConsultationPage() {
               </div>
             </div>
           </div>
-
           {/* Departments Section */}
          <DepartmentsSlider/>
 

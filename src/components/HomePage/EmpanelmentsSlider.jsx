@@ -32,9 +32,9 @@ export default function EmpanelmentsSlider() {
     <div className="w-full bg-gradient-to-b from-blue-50 to-white py-8 md:py-16">
       <div className="container mx-auto px-4">
         {/* Title */}
-        <h2 className="text-3xl md:text-4xl font-bold text-blue-900 mb-6 md:mb-10 text-center">
+        <h2 className="text-3xl md:text-4xl font-bold text-[#002b4a] mb-6 md:mb-10 text-center">
           Our Empanelments
-         <div className="w-24 h-1 bg-blue-600 mx-auto mt-2"></div>
+         <div className="w-24 h-1 bg-[#002b4a] mx-auto mt-2"></div>
         </h2>
 
         {/* Slider Container */}
@@ -124,10 +124,10 @@ export default function EmpanelmentsSlider() {
           </Swiper>
 
           {/* Custom Navigation Buttons */}
-          <button className="swiper-button-prev-custom absolute left-0 md:-left-4 top-1/2 -translate-y-1/2 z-10 bg-blue-600 text-white p-1.5 md:p-2 rounded-full shadow-lg hover:bg-blue-700 transition-colors">
+          <button className="swiper-button-prev-custom absolute left-0 md:-left-4 top-1/2 -translate-y-1/2 z-10 bg-[#002b4a] text-white p-1.5 md:p-2 rounded-full shadow-lg hover:bg-blue-700 transition-colors">
             <ChevronLeft className="w-4 h-4 md:w-6 md:h-6" />
           </button>
-          <button className="swiper-button-next-custom absolute right-0 md:-right-4 top-1/2 -translate-y-1/2 z-10 bg-blue-600 text-white p-1.5 md:p-2 rounded-full shadow-lg hover:bg-blue-700 transition-colors">
+          <button className="swiper-button-next-custom absolute right-0 md:-right-4 top-1/2 -translate-y-1/2 z-10 bg-[#002b4a] text-white p-1.5 md:p-2 rounded-full shadow-lg hover:bg-blue-700 transition-colors">
             <ChevronRight className="w-4 h-4 md:w-6 md:h-6" />
           </button>
         </div>

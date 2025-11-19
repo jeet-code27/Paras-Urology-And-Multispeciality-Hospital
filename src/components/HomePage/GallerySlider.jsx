@@ -8,6 +8,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { getGalleries } from '@/lib/firebase/galleries';
+import Link from 'next/link';
 
 export default function GallerySlider() {
   const [galleries, setGalleries] = useState([]);
@@ -94,11 +95,11 @@ export default function GallerySlider() {
           transition={{ duration: 0.8, ease: 'easeOut' }}
           viewport={{ once: true }}
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
+        <h2 className="text-3xl md:text-4xl font-bold text-[#002b4a]">
             Gallery Highlights
           </h2>
           <motion.div
-            className="w-24 h-1 bg-blue-600 mx-auto mt-2"
+            className="w-24 h-1 bg-[#002b4a] mx-auto mt-2"
             initial={{ scaleX: 0 }}
             whileInView={{ scaleX: 1 }}
             transition={{ delay: 0.3, duration: 0.6, ease: 'easeOut' }}
@@ -190,7 +191,7 @@ export default function GallerySlider() {
                           e.stopPropagation();
                           openLightbox(image.gallery, imageIndexInGallery);
                         }}
-                        className="absolute top-2 right-2 bg-blue-600 text-white p-1.5 md:p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-blue-700 z-10"
+                        className="absolute top-2 right-2 bg-[#002b4a] text-white p-1.5 md:p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-blue-700 z-10"
                         title="View full size"
                       >
                         <ZoomIn className="w-3 h-3 md:w-4 md:h-4" />
@@ -203,10 +204,10 @@ export default function GallerySlider() {
           </Swiper>
 
           {/* Navigation */}
-          <button className="gallery-swiper-button-prev absolute left-0 md:-left-4 top-1/2 -translate-y-1/2 z-10 bg-blue-600 text-white p-1.5 md:p-2 rounded-full shadow-lg hover:bg-blue-700 transition-colors">
+          <button className="gallery-swiper-button-prev absolute left-0 md:-left-4 top-1/2 -translate-y-1/2 z-10 bg-[#002b4a] text-white p-1.5 md:p-2 rounded-full shadow-lg hover:bg-blue-700 transition-colors">
             <ChevronLeft className="w-4 h-4 md:w-6 md:h-6" />
           </button>
-          <button className="gallery-swiper-button-next absolute right-0 md:-right-4 top-1/2 -translate-y-1/2 z-10 bg-blue-600 text-white p-1.5 md:p-2 rounded-full shadow-lg hover:bg-blue-700 transition-colors">
+          <button className="gallery-swiper-button-next absolute right-0 md:-right-4 top-1/2 -translate-y-1/2 z-10 bg-[#002b4a] text-white p-1.5 md:p-2 rounded-full shadow-lg hover:bg-blue-700 transition-colors">
             <ChevronRight className="w-4 h-4 md:w-6 md:h-6" />
           </button>
         </motion.div>
@@ -219,13 +220,13 @@ export default function GallerySlider() {
           transition={{ duration: 0.7, ease: 'easeOut' }}
           viewport={{ once: true }}
         >
-          <a
+          <Link
             href="/gallery"
-            className="inline-flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-all shadow-md hover:shadow-lg"
+            className="inline-flex items-center gap-2 bg-[#002b4a] text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-all shadow-md hover:shadow-lg"
           >
             <Camera className="w-5 h-5" />
             View Full Gallery
-          </a>
+          </Link>
         </motion.div>
       </div>
 
@@ -298,7 +299,7 @@ export default function GallerySlider() {
           bottom: 10px;
         }
         .gallery-swiper .swiper-pagination-bullet {
-          background: #2563eb;
+          background: #002b4a;
           opacity: 0.5;
         }
         .gallery-swiper .swiper-pagination-bullet-active {

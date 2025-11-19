@@ -25,7 +25,7 @@ export default function AboutUsSection() {
               <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2">
                 About Paras Urology & Multispeciality Hospital
               </h2>
-              <div className="w-20 h-1 bg-blue-600"></div>
+              <div className="w-20 h-1 bg-[#002b4a]"></div>
             </div>
 
             {/* Description */}
@@ -44,7 +44,7 @@ export default function AboutUsSection() {
               {/* Qualified Medical Team */}
               <div className="flex gap-4">
                 <div className="flex-shrink-0">
-                  <div className="w-14 h-14 bg-blue-600 rounded-lg flex items-center justify-center">
+                  <div className="w-14 h-14 bg-green-600 rounded-lg flex items-center justify-center">
                     <UserCheck className="w-7 h-7 text-white" />
                   </div>
                 </div>
@@ -61,7 +61,7 @@ export default function AboutUsSection() {
               {/* World Class Facilities */}
               <div className="flex gap-4">
                 <div className="flex-shrink-0">
-                  <div className="w-14 h-14 bg-blue-600 rounded-lg flex items-center justify-center">
+                  <div className="w-14 h-14 bg-green-600 rounded-lg flex items-center justify-center">
                     <Wrench className="w-7 h-7 text-white" />
                   </div>
                 </div>
@@ -78,10 +78,10 @@ export default function AboutUsSection() {
             </div>
 
             {/* Emergency Call Banner */}
-            <div className="bg-blue-600 rounded-lg overflow-hidden shadow-lg mt-8">
+            <div className="bg-green-600 rounded-lg overflow-hidden shadow-lg mt-8">
               <div className="grid grid-cols-1 md:grid-cols-2">
                 {/* Left Side */}
-                <div className="flex items-center justify-center gap-3 p-6 bg-blue-700">
+                <div className="flex items-center justify-center gap-3 p-6 bg-green-700">
                   <Phone className="w-6 h-6 text-white" />
                   <span className="text-white text-lg font-semibold">
                     Any Emergency? Call Now!
@@ -89,7 +89,7 @@ export default function AboutUsSection() {
                 </div>
                 
                 {/* Right Side */}
-                <div className="flex items-center justify-center p-6 bg-blue-600">
+                <div className="flex items-center justify-center p-6 bg-green-600">
                   <a 
                     href="tel:+919521894263"
                     className="text-white text-2xl font-bold hover:underline"

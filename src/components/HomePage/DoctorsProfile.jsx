@@ -70,11 +70,11 @@ export default function DoctorsProfile() {
           transition={{ duration: 1, ease: 'easeOut' }}
           viewport={{ once: true }}
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-blue-900 mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold text-[#002b4a] mb-4">
             Meet Our Leaders
           </h2>
           <motion.div
-            className="w-24 h-1 bg-gradient-to-r from-blue-600 to-cyan-500 mx-auto mb-4"
+            className="w-24 h-1 bg-[#002b4a] mx-auto mb-4"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ delay: 0.3, duration: 1 }}
@@ -150,7 +150,7 @@ export default function DoctorsProfile() {
                 <h3 className="text-3xl md:text-4xl font-bold text-blue-900 mb-2">
                   {doctor.name}
                 </h3>
-                <p className="text-lg text-cyan-600 font-semibold mb-4">
+                <p className="text-lg text-green-900 font-semibold mb-4">
                   {doctor.position}
                 </p>
 
@@ -167,8 +167,8 @@ export default function DoctorsProfile() {
                 </div>
 
                 <div className="flex items-center gap-2 text-gray-700 mb-4">
-                  <Stethoscope className="w-5 h-5 text-cyan-600" />
-                  <span className="font-semibold">{doctor.specialization}</span>
+                  <Stethoscope className="w-5 h-5 text-green-900" />
+                  <span className="font-semibold text-green-400">{doctor.specialization}</span>
                 </div>
 
                 <p className="text-gray-700 leading-relaxed mb-6">
@@ -177,14 +177,14 @@ export default function DoctorsProfile() {
 
                 {/* Expertise */}
                 <div className="mb-6">
-                  <h4 className="flex items-center gap-2 text-xl font-bold text-blue-900 mb-3">
-                    <Award className="w-5 h-5 text-cyan-600" />
+                  <h4 className="flex items-center gap-2 text-xl font-bold text-green-400 mb-3">
+                    <Award className="w-5 h-5 text-green-900" />
                     Areas of Expertise
                   </h4>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                     {doctor.expertise.map((exp, idx) => (
                       <div key={idx} className="flex items-start gap-2">
-                        <span className="text-cyan-600 mt-1">✦</span>
+                        <span className="text-green-900 mt-1">✦</span>
                         <span className="text-gray-700 text-sm">{exp}</span>
                       </div>
                     ))}
@@ -193,8 +193,8 @@ export default function DoctorsProfile() {
 
                 {/* Highlights */}
                 <div>
-                  <h4 className="flex items-center gap-2 text-xl font-bold text-blue-900 mb-3">
-                    <GraduationCap className="w-5 h-5 text-cyan-600" />
+                  <h4 className="flex items-center gap-2 text-xl font-bold text-green-400 mb-3">
+                    <GraduationCap className="w-5 h-5 text-green-800" />
                     Key Highlights
                   </h4>
                   <ul className="space-y-2">
@@ -203,7 +203,7 @@ export default function DoctorsProfile() {
                         key={idx}
                         className="flex items-start gap-2 text-gray-700 text-sm"
                       >
-                        <span className="text-cyan-600 font-bold mt-1">•</span>
+                        <span className="text-green-800 font-bold mt-1">•</span>
                         <span>{highlight}</span>
                       </li>
                     ))}
