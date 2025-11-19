@@ -1,8 +1,8 @@
 // lib/firebase/doctors.js
 
-import { 
+import {
   collection,
-  doc, 
+  doc,
   getDoc,
   getDocs,
   setDoc,
@@ -24,9 +24,16 @@ const DOCTORS_COLLECTION = 'doctors';
 export const getDoctors = async () => {
   try {
     const doctorsRef = collection(db, DOCTORS_COLLECTION);
-    const q = query(doctorsRef, orderBy('createdAt', 'desc'));
-    const querySnapshot = await getDocs(q);
+    // const q = query(doctorsRef, orderBy('createdAt', 'desc'));
+
+    const q = query(
+  doctorsRef,
+  orderBy('displayOrder', 'asc'),   // 👈 First priority
     
+);
+
+    const querySnapshot = await getDocs(q);
+
     const doctors = [];
     querySnapshot.forEach((doc) => {
       doctors.push({
@@ -34,7 +41,7 @@ export const getDoctors = async () => {
         ...doc.data()
       });
     });
-    
+
     return { success: true, data: doctors };
   } catch (error) {
     console.error('Error getting doctors:', error);
@@ -51,10 +58,10 @@ export const getDoctor = async (doctorId) => {
   try {
     const doctorRef = doc(db, DOCTORS_COLLECTION, doctorId);
     const doctorSnap = await getDoc(doctorRef);
-    
+
     if (doctorSnap.exists()) {
-      return { 
-        success: true, 
+      return {
+        success: true,
         data: {
           id: doctorSnap.id,
           ...doctorSnap.data()
@@ -79,7 +86,7 @@ export const getDoctorBySlug = async (slug) => {
     const doctorsRef = collection(db, DOCTORS_COLLECTION);
     const q = query(doctorsRef, where('slug', '==', slug));
     const querySnapshot = await getDocs(q);
-    
+
     if (!querySnapshot.empty) {
       const doctorDoc = querySnapshot.docs[0];
       return {
@@ -120,23 +127,21 @@ export const createSlug = (name) => {
  */
 export const addDoctor = async (doctorData) => {
   try {
-    // Create slug from name
     const slug = createSlug(doctorData.name);
-    
-    // Generate unique ID
     const doctorRef = doc(collection(db, DOCTORS_COLLECTION));
-    
+
     const newDoctor = {
       ...doctorData,
       slug,
+      displayOrder: doctorData.displayOrder || 0,  // 👈 NEW FIELD
       createdAt: serverTimestamp(),
       updatedAt: serverTimestamp()
     };
-    
+
     await setDoc(doctorRef, newDoctor);
-    
-    return { 
-      success: true, 
+
+    return {
+      success: true,
       data: {
         id: doctorRef.id,
         ...newDoctor
@@ -148,6 +153,7 @@ export const addDoctor = async (doctorData) => {
   }
 };
 
+
 /**
  * Update existing doctor
  * @param {string} doctorId - The doctor's document ID
@@ -157,19 +163,17 @@ export const addDoctor = async (doctorData) => {
 export const updateDoctor = async (doctorId, doctorData) => {
   try {
     const doctorRef = doc(db, DOCTORS_COLLECTION, doctorId);
-    
-    // Update slug if name changed
-    const slug = createSlug(doctorData.name);
-    
+
     const updatedDoctor = {
       ...doctorData,
-      slug,
+      slug: createSlug(doctorData.name),
+      displayOrder: doctorData.displayOrder,  // 👈 NEW FIELD
       updatedAt: serverTimestamp()
     };
-    
+
     await setDoc(doctorRef, updatedDoctor, { merge: true });
-    
-    return { 
+
+    return {
       success: true,
       data: {
         id: doctorId,
@@ -182,6 +186,7 @@ export const updateDoctor = async (doctorId, doctorData) => {
   }
 };
 
+
 /**
  * Delete doctor
  * @param {string} doctorId - The doctor's document ID
@@ -191,7 +196,7 @@ export const deleteDoctor = async (doctorId) => {
   try {
     const doctorRef = doc(db, DOCTORS_COLLECTION, doctorId);
     await deleteDoc(doctorRef);
-    
+
     return { success: true };
   } catch (error) {
     console.error('Error deleting doctor:', error);

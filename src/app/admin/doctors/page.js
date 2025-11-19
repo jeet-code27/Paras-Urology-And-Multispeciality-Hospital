@@ -13,7 +13,7 @@ export default function DoctorManagementPanel() {
   const [editingDoctor, setEditingDoctor] = useState(null);
   const [uploading, setUploading] = useState(false);
 
-  // FINAL formData includes sortOrder
+  // FINAL formData includes displayOrder
   const [formData, setFormData] = useState({
     name: '',
     education: '',
@@ -25,7 +25,7 @@ export default function DoctorManagementPanel() {
     timing: '',
     memberships: '',
     imageUrl: '',
-    sortOrder: 0,        // ✅ new field
+    displayOrder: 0,        // ✅ new field
   });
 
   const [imageFile, setImageFile] = useState(null);
@@ -83,7 +83,7 @@ export default function DoctorManagementPanel() {
       timing: '',
       memberships: '',
       imageUrl: '',
-      sortOrder: 0,
+      displayOrder: 0,
     });
     setImageFile(null);
     setImagePreview('');
@@ -130,7 +130,7 @@ export default function DoctorManagementPanel() {
         }
       }
 
-      // FINAL doctorData includes sortOrder
+      // FINAL doctorData includes displayOrder
       const doctorData = {
         name: formData.name.trim(),
         education: formData.education.trim(),
@@ -145,7 +145,7 @@ export default function DoctorManagementPanel() {
           .map(m => m.trim())
           .filter(m => m.length > 0),
         imageUrl,
-        sortOrder: Number(formData.sortOrder) || 0,  // ✅ NEW
+        displayOrder: Number(formData.displayOrder) || 0,  // ✅ NEW
       };
 
       let result;
@@ -187,7 +187,7 @@ export default function DoctorManagementPanel() {
         ? doctor.memberships.join('\n')
         : (doctor.memberships || ''),
       imageUrl: doctor.imageUrl || '',
-      sortOrder: doctor.sortOrder ?? 0,   // ✅ load existing
+      displayOrder: doctor.displayOrder ?? 0,   // ✅ load existing
     });
     setImagePreview(doctor.imageUrl || '');
     setShowForm(true);
@@ -354,8 +354,8 @@ export default function DoctorManagementPanel() {
                   </label>
                   <input
                     type="number"
-                    name="sortOrder"
-                    value={formData.sortOrder}
+                    name="displayOrder"
+                    value={formData.displayOrder}
                     onChange={handleInputChange}
                     disabled={uploading}
                     className="w-full px-4 py-2 border rounded-lg"
@@ -482,8 +482,8 @@ export default function DoctorManagementPanel() {
                   <p className="text-sm"><b>Experience:</b> {doctor.experience}</p>
                   <p className="text-sm"><b>Expertise:</b> {doctor.expertise}</p>
 
-                  {/* sort order display */}
-                  <p className="text-xs mt-2 text-gray-500">Sort Order: {doctor.sortOrder}</p>
+                  {/* display order display */}
+                  <p className="text-xs mt-2 text-gray-500">Display Order: {doctor.displayOrder}</p>
 
                   <div className="flex gap-2 mt-4">
                     <button
