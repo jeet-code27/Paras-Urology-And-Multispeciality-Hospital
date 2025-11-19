@@ -209,7 +209,7 @@ export default function AllDoctorsPage() {
       {/* CTA Section */}
       {!loading && doctors.length > 0 && (
         <motion.div
-          className="bg-blue-600 text-white py-16 mt-12"
+          className="bg-green-600 text-white py-16 mt-12"
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, amount: 0.3 }}
@@ -228,12 +228,16 @@ export default function AllDoctorsPage() {
               transition={{ duration: 0.6, delay: 0.3 }}
               viewport={{ once: true }}
             >
-              <button className="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors">
+              <Link href="/book-appointment">
+              <button className="bg-white text-green-600 px-8 py-3 rounded-lg font-semibold hover:bg-green-50 transition-colors">
                 Book Appointment
               </button>
+              </Link>
+               <Link href={"tel:+919521894263"}>
               <button className="bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-800 transition-colors">
                 Contact Us
               </button>
+              </Link>
             </motion.div>
           </div>
         </motion.div>

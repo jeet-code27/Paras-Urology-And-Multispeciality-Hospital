@@ -11,7 +11,7 @@ export default function BookConsultationPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-50">
       {/* Hero Section */}
-      <div className="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-20">
+      <div className="bg-[#002b4a] text-white py-20">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-5xl md:text-6xl font-bold mb-6">Book Your Consultation</h1>
@@ -76,7 +76,7 @@ export default function BookConsultationPage() {
           </div>
 
           {/* Call to Action Section */}
-          <div className="bg-gradient-to-r from-blue-600 to-blue-800 rounded-3xl shadow-2xl p-12 text-white mb-16">
+          <div className="bg-[#002b4a] rounded-3xl shadow-2xl p-12 text-white mb-16">
             <div className="max-w-4xl mx-auto text-center">
               <h2 className="text-4xl font-bold mb-6">Ready to Book Your Consultation?</h2>
               <p className="text-xl text-blue-100 mb-8">
@@ -216,7 +216,7 @@ export default function BookConsultationPage() {
             </p>
             <button 
               onClick={handleCall}
-              className="bg-gradient-to-r from-blue-600 to-blue-800 text-white px-12 py-5 rounded-full text-2xl font-bold hover:from-blue-700 hover:to-blue-900 transition-all transform hover:scale-105 shadow-2xl"
+              className="bg-[#002b4a] text-white px-12 py-5 rounded-full text-2xl font-bold hover:from-blue-700 hover:to-blue-900 transition-all transform hover:scale-105 shadow-2xl"
             >
               📞 Call +91-95218-94263
             </button>
