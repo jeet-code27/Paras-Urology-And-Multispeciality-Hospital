@@ -258,7 +258,7 @@ const Navigation = () => {
                   </Link>
                   
                   <Link
-                    href="/empanelments"
+                    href="/our-empanelment"
                     className="text-gray-700 hover:text-blue-700 hover:bg-blue-50 font-medium py-3 px-4 rounded-lg transition-all"
                     onClick={closeMobileMenu}
                   >

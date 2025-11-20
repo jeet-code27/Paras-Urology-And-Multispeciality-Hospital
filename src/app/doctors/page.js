@@ -68,16 +68,9 @@ export default function AllDoctorsPage() {
       initial="hidden"
       animate="show"
     >
-      {/* Hero Section */}
-      <motion.div
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true, amount: 0.2 }}
-        variants={fadeInUp}
-        custom={0.2}
-      >
-        <OtherHeroSection title={'Our Doctors'} imageUrl={'/images/hero.jpg'} />
-      </motion.div>
+      
+        <OtherHeroSection title={'Our Doctors'} imageUrl={'/images/hero2.jpg'} />
+      
 
       {/* Doctors Grid */}
       <div className="container mx-auto px-4 py-12">

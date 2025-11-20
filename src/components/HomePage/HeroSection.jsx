@@ -45,7 +45,7 @@ export default function HeroSection() {
 
   if (!heroImages || heroImages.length === 0) {
     return (
-      <section className="relative h-[35vh] min-h-[250px] md:h-[70vh] md:min-h-[500px] flex items-center">
+      <section className="relative h-[35vh] min-h-[200px] md:h-[70vh] md:min-h-[500px] flex items-center">
         <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-blue-800"></div>
         <div className="absolute inset-0 bg-black bg-opacity-40"></div>
         <div className="container mx-auto px-4 z-10 text-white">
@@ -57,7 +57,7 @@ export default function HeroSection() {
   }
 
   return (
-    <section className="relative h-[35vh] min-h-[250px] md:h-[70vh] md:min-h-[550px] mt-6 ">
+    <section className="relative h-[20vh] min-h-[180px] md:h-[70vh] md:min-h-[550px] sm:mt-6 md:mt-6 ">
       <Swiper
         modules={[Navigation, Pagination, Autoplay, EffectFade]}
         effect="fade"
@@ -65,7 +65,7 @@ export default function HeroSection() {
         navigation
         pagination={{ clickable: true }}
         autoplay={{
-          delay: 5000,
+          delay: 7000,
           disableOnInteraction: false,
         }}
         loop={heroImages.length > 1}
@@ -93,8 +93,8 @@ export default function HeroSection() {
         .swiper-button-prev {
           color: white;
           background: rgba(0, 0, 0, 0.3);
-          width: 40px;
-          height: 40px;
+          width: 20px;
+          height: 20px;
           border-radius: 50%;
           transition: all 0.3s ease;
         }

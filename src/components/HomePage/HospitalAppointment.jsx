@@ -88,7 +88,7 @@ export default function HospitalAppointment() {
                   width="100%"
                   height="100%"
                   style={{ border: 0 }}
-                  allowFullScreen={true}
+                  allowFullScreen={false}
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
                   className="rounded-lg"
@@ -102,7 +102,7 @@ export default function HospitalAppointment() {
                 Best Multi Speciality Hospital in Ajmer, Rajasthan
               </h2>
 
-              <ul className="space-y-3 text-white">
+              <ul className="space-y-3 text-white text-justify">
                 <li className="flex items-start">
                   <span className="text-yellow-400 mr-3 mt-1">●</span>
                   <span className="text-sm sm:text-base">

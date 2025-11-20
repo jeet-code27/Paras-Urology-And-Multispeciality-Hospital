@@ -68,7 +68,7 @@ export default function DoctorsProfile() {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 1, ease: 'easeOut' }}
-          viewport={{ once: true }}
+          viewport={{ once: false }}
         >
           <h2 className="text-4xl md:text-5xl font-bold text-[#002b4a] mb-4">
             Meet Our Leaders
@@ -78,7 +78,7 @@ export default function DoctorsProfile() {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ delay: 0.3, duration: 1 }}
-            viewport={{ once: true }}
+            viewport={{ once: false }}
           />
           <p className="text-lg text-gray-600 max-w-3xl mx-auto">
             Experienced medical professionals dedicated to providing exceptional healthcare services
@@ -90,17 +90,15 @@ export default function DoctorsProfile() {
           {doctors.map((doctor) => (
             <motion.div
               key={doctor.id}
-               variants={{
+              variants={{
                 hidden: { opacity: 0, y: 40 },
                 visible: { opacity: 1, y: 0 }
               }}
               transition={{ duration: 1.6, ease: 'easeOut' }}
-               initial={{ opacity: 0, y: 70 }}
+              initial={{ opacity: 0, y: 70 }}
               whileInView={{ opacity: 1, y: 0 }}
               className="flex flex-col lg:flex-row gap-8 bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300"
-             
-             
-              viewport={{ once: true }}
+              viewport={{ once: false }}
             >
               {/* Doctor Image */}
               <div className="lg:w-2/5 relative">
@@ -120,7 +118,7 @@ export default function DoctorsProfile() {
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
                     transition={{ delay: 0.3, duration: 0.8 }}
-                    viewport={{ once: true }}
+                    viewport={{ once: false }}
                   >
                     <div className="grid grid-cols-2 gap-4">
                       <div className="bg-white/20 backdrop-blur-md rounded-lg p-3 text-center">
@@ -144,7 +142,7 @@ export default function DoctorsProfile() {
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 transition={{ delay: 0.2, duration: 1 }}
-                viewport={{ once: true }}
+                viewport={{ once: false }}
               >
                 {/* Name and Position */}
                 <h3 className="text-3xl md:text-4xl font-bold text-blue-900 mb-2">
@@ -168,24 +166,24 @@ export default function DoctorsProfile() {
 
                 <div className="flex items-center gap-2 text-gray-700 mb-4">
                   <Stethoscope className="w-5 h-5 text-green-900" />
-                  <span className="font-semibold text-green-400">{doctor.specialization}</span>
+                  <span className="font-semibold text-green-900">{doctor.specialization}</span>
                 </div>
 
-                <p className="text-gray-700 leading-relaxed mb-6">
+                <p className="text-gray-700 leading-relaxed mb-6 text-justify">
                   {doctor.description}
                 </p>
 
                 {/* Expertise */}
                 <div className="mb-6">
-                  <h4 className="flex items-center gap-2 text-xl font-bold text-green-400 mb-3">
+                  <h4 className="flex items-center gap-2 text-xl font-bold text-green-900 mb-3">
                     <Award className="w-5 h-5 text-green-900" />
                     Areas of Expertise
                   </h4>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                     {doctor.expertise.map((exp, idx) => (
                       <div key={idx} className="flex items-start gap-2">
-                        <span className="text-green-900 mt-1">✦</span>
-                        <span className="text-gray-700 text-sm">{exp}</span>
+                        <span className="text-green-900 mt-0.5 flex-shrink-0">✦</span>
+                        <span className="text-gray-700 text-sm leading-relaxed">{exp}</span>
                       </div>
                     ))}
                   </div>
@@ -193,8 +191,8 @@ export default function DoctorsProfile() {
 
                 {/* Highlights */}
                 <div>
-                  <h4 className="flex items-center gap-2 text-xl font-bold text-green-400 mb-3">
-                    <GraduationCap className="w-5 h-5 text-green-800" />
+                  <h4 className="flex items-center gap-2 text-xl font-bold text-green-900 mb-3">
+                    <GraduationCap className="w-5 h-5 text-green-900" />
                     Key Highlights
                   </h4>
                   <ul className="space-y-2">
@@ -203,8 +201,8 @@ export default function DoctorsProfile() {
                         key={idx}
                         className="flex items-start gap-2 text-gray-700 text-sm"
                       >
-                        <span className="text-green-800 font-bold mt-1">•</span>
-                        <span>{highlight}</span>
+                        <span className="text-green-900 font-bold mt-0.5 flex-shrink-0">•</span>
+                        <span className="leading-relaxed">{highlight}</span>
                       </li>
                     ))}
                   </ul>

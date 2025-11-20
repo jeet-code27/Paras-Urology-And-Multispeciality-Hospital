@@ -36,7 +36,7 @@ const StatsSection = () => {
           className="flex flex-wrap justify-center items-center gap-6 mb-8"
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true }}
+          viewport={{ once: false }}
           variants={{
             visible: { transition: { staggerChildren: 0.15 } },
             hidden: {}
@@ -63,7 +63,7 @@ const StatsSection = () => {
             initial={{ scale: 0.8, opacity: 0 }}
             whileInView={{ scale: 1, opacity: 1 }}
             transition={{ type: 'spring', stiffness: 100, damping: 12 }}
-            viewport={{ once: true }}
+            viewport={{ once: false }}
           >
             <Image
               src="/images/pumh-logo.png"
@@ -95,7 +95,7 @@ const StatsSection = () => {
           className="flex flex-wrap justify-center items-center gap-4"
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true }}
+          viewport={{ once: false }}
           variants={{
             visible: { transition: { staggerChildren: 0.15 } },
             hidden: {}

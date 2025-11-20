@@ -1,5 +1,7 @@
+'use client';
 import React from 'react';
 import Image from 'next/image'; // This is for Next.js <Image> component
+import { motion } from 'framer-motion';
 
 /**
  * A Next.js-optimized hero section component.
@@ -11,32 +13,34 @@ import Image from 'next/image'; // This is for Next.js <Image> component
 const OtherHeroSection = ({ title, imageUrl, imageAlt = "Hero background" }) => {
   return (
     <section className="relative w-full h-[350px] overflow-hidden font-sans">
-    
+     
       <Image
         src={imageUrl}
         alt={imageAlt}
         layout="fill"
         objectFit="cover"
         quality={75}
-        priority // Add 'priority' to preload if this is a an LCP element
+        priority 
         className="z-0"
- 
-       
-      />
-      
-      {/* Dark overlay for better text readability (optional, but good practice) */}
-      <div className="absolute inset-0 bg-black/20 z-10"></div>
 
-      {/* Content Layer */}
+        
+      />
+     
+     
       <div className="relative z-20 h-full flex items-center">
         {/* Constrain content width and center it, matching typical page layouts */}
         <div className="max-w-8xl w-full mx-auto px-4 sm:px-6 lg:px-8">
           {/* The blue title box, aligned to the left of the content area */}
-          <div className="bg-[#002b4a] py-4 px-6 md:py-5 md:px-8 rounded-md shadow-lg inline-block">
+          <motion.div 
+            className="bg-[#002b4a] py-4 px-6 md:py-5 md:px-8 rounded-md shadow-lg inline-block"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+          >
             <h1 className="text-white text-2xl md:text-3xl lg:text-4xl font-bold">
               {title}
             </h1>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

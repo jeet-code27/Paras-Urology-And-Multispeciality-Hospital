@@ -78,15 +78,9 @@ export default function EmpanelmentsPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
       {/* Hero Section */}
-      <motion.div
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true, amount: 0.2 }}
-        variants={fadeInUp}
-        custom={0.2}
-      >
+     
         <OtherHeroSection title="Our Empanelments" imageUrl="/images/hero.jpg" />
-      </motion.div>
+    
 
       {/* Main Content */}
       <div className="container mx-auto px-4 py-16">

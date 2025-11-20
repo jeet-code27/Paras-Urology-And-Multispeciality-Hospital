@@ -26,7 +26,7 @@ const AboutSection = () => {
             initial={{ opacity: 0, x: -80 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.9, ease: 'easeOut' }}
-            viewport={{ once: true }}
+            viewport={{ once: false }}
           >
             <h3 className="text-gray-800 text-xl font-bold mb-4 uppercase tracking-wide">
               About Our Hospital
@@ -37,17 +37,17 @@ const AboutSection = () => {
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.8 }}
-              viewport={{ once: true }}
+              viewport={{ once: false }}
             >
               Paras Urology & Multispeciality Hospital
             </motion.h2>
 
             <motion.div
-              className="text-gray-700 leading-relaxed"
+              className="text-gray-700 leading-relaxed text-justify"
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.9 }}
-              viewport={{ once: true }}
+              viewport={{ once: false }}
             >
               <p>
                 <span className="font-semibold">
@@ -61,7 +61,7 @@ const AboutSection = () => {
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6, duration: 0.8 }}
-              viewport={{ once: true }}
+              viewport={{ once: false }}
             >
               <Link
                 href="/about"
@@ -84,7 +84,7 @@ const AboutSection = () => {
             initial={{ opacity: 0, x: 80 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.9, ease: 'easeOut' }}
-            viewport={{ once: true }}
+            viewport={{ once: false }}
           >
             <Image
               src="/images/hospital-about.png"
