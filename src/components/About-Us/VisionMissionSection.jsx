@@ -204,7 +204,7 @@ export default function VisionMissionSection() {
                 whileHover={{ scale: 1.02 }}
               >
                 <Image
-                  src="/images/hospital-facility.jpg"
+                  src="/images/hospital-facilities.jpg"
                   alt="Hospital Facility"
                   fill
                   className="object-cover"
