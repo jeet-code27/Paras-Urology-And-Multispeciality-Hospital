@@ -25,7 +25,7 @@ export default function Footer() {
   ];
 
   const socialLinks = [
-    { icon: Facebook, href: "https://www.facebook.com/PUMHAJMER/", label: "Facebook" },
+    { icon: Facebook, href: "https://www.facebook.com/ParasUrology", label: "Facebook" },
     { icon: Instagram, href: "https://www.instagram.com/parasurology", label: "Instagram" },
     { icon: Youtube, href: "https://www.youtube.com/channel/UC3Oq_C_ae5qQqiflY0h30Kw", label: "YouTube" },
     // { icon: Twitter, href: "https://twitter.com", label: "Twitter" },
@@ -111,7 +111,20 @@ export default function Footer() {
                 <Phone className="w-5 h-5 mt-0.5 text-yellow-400" />
                 <span className="text-sm">+91-95218-94263</span>
               </a>
-
+             <a
+                href="tel:0145-2941941"
+                className="flex items-start gap-3 text-blue-100 hover:text-yellow-400 transition-colors duration-300"
+              >
+                <Phone className="w-5 h-5 mt-0.5 text-yellow-400" />
+                <span className="text-sm">0145-2941941</span>
+              </a>
+              <a
+                href="tel:2942942"
+                className="flex items-start gap-3 text-blue-100 hover:text-yellow-400 transition-colors duration-300"
+              >
+                <Phone className="w-5 h-5 mt-0.5 text-yellow-400" />
+                <span className="text-sm">2942942</span>
+              </a>
               <a
                 href="mailto:parasurologyhospital@gmail.com"
                 className="flex items-start gap-3 text-blue-100 hover:text-yellow-400 transition-colors duration-300 break-all"
@@ -123,7 +136,7 @@ export default function Footer() {
               <div className="flex items-start gap-3 text-blue-100">
                 <MapPin className="w-5 h-5 mt-0.5 text-yellow-400" />
                 <span className="text-sm">
-                  C BLOCK, Pushkar Rd, Haribhau Upadhyay Nagar, Ajmer, Rajasthan 305001
+                  Haribhau Upadhyay Nagar C Block, Pushkar Road, Ajmer (Raj) 305001
                 </span>
               </div>
 

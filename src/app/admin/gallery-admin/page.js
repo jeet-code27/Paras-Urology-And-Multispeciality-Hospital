@@ -57,12 +57,16 @@ export default function GalleryAdminPanel() {
 
     if (validFiles.length === 0) return;
 
-    setImageFiles(prev => [...prev, ...validFiles]);
-
     validFiles.forEach(file => {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setImagePreviews(prev => [...prev, { file: file.name, url: reader.result }]);
+        setImageFiles(prev => [...prev, file]);
+        setImagePreviews(prev => [...prev, { 
+          file: file.name, 
+          url: reader.result,
+          name: '',
+          description: ''
+        }]);
       };
       reader.readAsDataURL(file);
     });
@@ -77,6 +81,21 @@ export default function GalleryAdminPanel() {
     setFormData(prev => ({
       ...prev,
       images: prev.images.filter((_, i) => i !== index)
+    }));
+  };
+
+  const updatePreviewImageDetails = (index, field, value) => {
+    setImagePreviews(prev => prev.map((img, i) => 
+      i === index ? { ...img, [field]: value } : img
+    ));
+  };
+
+  const updateExistingImageDetails = (index, field, value) => {
+    setFormData(prev => ({
+      ...prev,
+      images: prev.images.map((img, i) => 
+        i === index ? { ...img, [field]: value } : img
+      )
     }));
   };
 
@@ -121,6 +140,7 @@ export default function GalleryAdminPanel() {
         const totalFiles = imageFiles.length;
         for (let i = 0; i < imageFiles.length; i++) {
           const file = imageFiles[i];
+          const preview = imagePreviews[i];
           setUploadProgress(Math.round(((i + 1) / totalFiles) * 100));
           
           const uploadResult = await uploadToCloudinary(file);
@@ -131,6 +151,8 @@ export default function GalleryAdminPanel() {
           
           uploadedImages.push({
             url: uploadResult.url,
+            name: preview.name || '',
+            description: preview.description || '',
             uploadedAt: new Date().toISOString()
           });
         }
@@ -174,7 +196,11 @@ export default function GalleryAdminPanel() {
       type: item.type || 'events',
       description: item.description || '',
       date: item.date || new Date().toISOString().split('T')[0],
-      images: item.images || []
+      images: (item.images || []).map(img => ({
+        ...img,
+        name: img.name || '',
+        description: img.description || ''
+      }))
     });
     setImageFiles([]);
     setImagePreviews([]);
@@ -328,56 +354,118 @@ export default function GalleryAdminPanel() {
                 />
               </div>
 
+              {/* Existing Images Section */}
               {editingItem && formData.images.length > 0 && (
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-3">
                     Existing Images ({formData.images.length})
                   </label>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                  <div className="space-y-4">
                     {formData.images.map((image, index) => (
-                      <div key={index} className="relative group">
-                        <img
-                          src={image.url}
-                          alt={`Existing ${index + 1}`}
-                          className="w-full h-32 object-cover rounded-lg border-2 border-gray-200 cursor-pointer hover:border-blue-500 transition-colors"
-                          onClick={() => setLightboxImage({ url: image.url, title: `${formData.title} - Image ${index + 1}` })}
-                        />
-                        <button
-                          onClick={() => removeExistingImage(index)}
-                          disabled={uploading}
-                          className="absolute top-2 right-2 bg-red-600 text-white p-1.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-700 disabled:opacity-50"
-                        >
-                          <X className="w-4 h-4" />
-                        </button>
+                      <div key={index} className="flex gap-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
+                        <div className="relative group flex-shrink-0">
+                          <img
+                            src={image.url}
+                            alt={image.name || `Existing ${index + 1}`}
+                            className="w-32 h-32 object-cover rounded-lg cursor-pointer hover:opacity-90 transition-opacity"
+                            onClick={() => setLightboxImage({ url: image.url, title: image.name || `${formData.title} - Image ${index + 1}`, description: image.description })}
+                          />
+                          <button
+                            onClick={() => removeExistingImage(index)}
+                            disabled={uploading}
+                            className="absolute top-2 right-2 bg-red-600 text-white p-1.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-700 disabled:opacity-50"
+                          >
+                            <X className="w-4 h-4" />
+                          </button>
+                        </div>
+                        <div className="flex-1 space-y-3">
+                          <div>
+                            <label className="block text-xs font-medium text-gray-600 mb-1">
+                              Image Name (optional)
+                            </label>
+                            <input
+                              type="text"
+                              value={image.name || ''}
+                              onChange={(e) => updateExistingImageDetails(index, 'name', e.target.value)}
+                              disabled={uploading}
+                              className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100"
+                              placeholder="Enter image name"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-xs font-medium text-gray-600 mb-1">
+                              Image Description (optional)
+                            </label>
+                            <textarea
+                              value={image.description || ''}
+                              onChange={(e) => updateExistingImageDetails(index, 'description', e.target.value)}
+                              disabled={uploading}
+                              rows={2}
+                              className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100"
+                              placeholder="Enter image description"
+                            />
+                          </div>
+                        </div>
                       </div>
                     ))}
                   </div>
                 </div>
               )}
 
+              {/* New Images Preview Section */}
               {imagePreviews.length > 0 && (
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-3">
                     New Images to Upload ({imagePreviews.length})
                   </label>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                  <div className="space-y-4">
                     {imagePreviews.map((preview, index) => (
-                      <div key={index} className="relative group">
-                        <img
-                          src={preview.url}
-                          alt={`Preview ${index + 1}`}
-                          className="w-full h-32 object-cover rounded-lg border-2 border-blue-500 cursor-pointer hover:border-blue-600 transition-colors"
-                          onClick={() => setLightboxImage({ url: preview.url, title: `Preview ${index + 1}` })}
-                        />
-                        <button
-                          onClick={() => removeImage(index)}
-                          disabled={uploading}
-                          className="absolute top-2 right-2 bg-red-600 text-white p-1.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-700 disabled:opacity-50"
-                        >
-                          <X className="w-4 h-4" />
-                        </button>
-                        <div className="absolute bottom-2 left-2 bg-blue-600 text-white px-2 py-1 rounded text-xs font-semibold">
-                          New
+                      <div key={index} className="flex gap-4 p-4 bg-blue-50 rounded-lg border-2 border-blue-200">
+                        <div className="relative group flex-shrink-0">
+                          <img
+                            src={preview.url}
+                            alt={preview.name || `Preview ${index + 1}`}
+                            className="w-32 h-32 object-cover rounded-lg cursor-pointer hover:opacity-90 transition-opacity"
+                            onClick={() => setLightboxImage({ url: preview.url, title: preview.name || `Preview ${index + 1}`, description: preview.description })}
+                          />
+                          <button
+                            onClick={() => removeImage(index)}
+                            disabled={uploading}
+                            className="absolute top-2 right-2 bg-red-600 text-white p-1.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-700 disabled:opacity-50"
+                          >
+                            <X className="w-4 h-4" />
+                          </button>
+                          <div className="absolute bottom-2 left-2 bg-blue-600 text-white px-2 py-1 rounded text-xs font-semibold">
+                            New
+                          </div>
+                        </div>
+                        <div className="flex-1 space-y-3">
+                          <div>
+                            <label className="block text-xs font-medium text-gray-600 mb-1">
+                              Image Name (optional)
+                            </label>
+                            <input
+                              type="text"
+                              value={preview.name}
+                              onChange={(e) => updatePreviewImageDetails(index, 'name', e.target.value)}
+                              disabled={uploading}
+                              className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100"
+                              placeholder="Enter image name"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-xs font-medium text-gray-600 mb-1">
+                              Image Description (optional)
+                            </label>
+                            <textarea
+                              value={preview.description}
+                              onChange={(e) => updatePreviewImageDetails(index, 'description', e.target.value)}
+                              disabled={uploading}
+                              rows={2}
+                              className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100"
+                              placeholder="Enter image description"
+                            />
+                          </div>
                         </div>
                       </div>
                     ))}
@@ -540,19 +628,28 @@ export default function GalleryAdminPanel() {
                             <div className="p-4">
                               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
                                 {item.images.map((image, imgIndex) => (
-                                  <div key={imgIndex} className="relative group aspect-square">
-                                    <img
-                                      src={image.url}
-                                      alt={`${item.title} - ${imgIndex + 1}`}
-                                      className="w-full h-full object-cover rounded-lg cursor-pointer hover:opacity-90 transition-opacity"
-                                      onClick={() => setLightboxImage({ url: image.url, title: `${item.title} - Image ${imgIndex + 1}` })}
-                                    />
+                                  <div key={imgIndex} className="relative group">
+                                    <div className="aspect-square">
+                                      <img
+                                        src={image.url}
+                                        alt={image.name || `${item.title} - ${imgIndex + 1}`}
+                                        className="w-full h-full object-cover rounded-lg cursor-pointer hover:opacity-90 transition-opacity"
+                                        onClick={() => setLightboxImage({ url: image.url, title: image.name || `${item.title} - Image ${imgIndex + 1}`, description: image.description })}
+                                      />
+                                    </div>
                                     <button
-                                      onClick={() => setLightboxImage({ url: image.url, title: `${item.title} - Image ${imgIndex + 1}` })}
+                                      onClick={() => setLightboxImage({ url: image.url, title: image.name || `${item.title} - Image ${imgIndex + 1}`, description: image.description })}
                                       className="absolute top-2 right-2 bg-blue-600 text-white p-1.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-blue-700"
                                     >
                                       <ZoomIn className="w-4 h-4" />
                                     </button>
+                                    {(image.name || image.description) && (
+                                      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-2 rounded-b-lg">
+                                        {image.name && (
+                                          <p className="text-white text-xs font-semibold truncate">{image.name}</p>
+                                        )}
+                                      </div>
+                                    )}
                                   </div>
                                 ))}
                               </div>
@@ -569,6 +666,7 @@ export default function GalleryAdminPanel() {
         </div>
       </div>
 
+      {/* Lightbox with image name and description */}
       {lightboxImage && (
         <div 
           className="fixed inset-0 bg-black bg-opacity-95 z-50 flex items-center justify-center p-4"
@@ -584,10 +682,15 @@ export default function GalleryAdminPanel() {
             <img
               src={lightboxImage.url}
               alt={lightboxImage.title}
-              className="max-w-full max-h-[85vh] object-contain"
+              className="max-w-full max-h-[75vh] object-contain"
               onClick={(e) => e.stopPropagation()}
             />
-            <p className="text-white text-lg mt-4 text-center font-medium">{lightboxImage.title}</p>
+            <div className="mt-4 text-center">
+              <p className="text-white text-lg font-medium">{lightboxImage.title}</p>
+              {lightboxImage.description && (
+                <p className="text-gray-300 text-sm mt-2 max-w-2xl">{lightboxImage.description}</p>
+              )}
+            </div>
           </div>
         </div>
       )}

@@ -47,10 +47,23 @@ export default function GalleryPublicPage() {
   const [lightboxImage, setLightboxImage] = useState(null);
   const [lightboxIndex, setLightboxIndex] = useState(0);
   const [lightboxImages, setLightboxImages] = useState([]);
+  const [galleryTitle, setGalleryTitle] = useState('');
 
   useEffect(() => {
     loadGalleries();
   }, []);
+
+  // Keyboard navigation for lightbox
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (!lightboxImage) return;
+      if (e.key === 'ArrowRight') nextImage();
+      else if (e.key === 'ArrowLeft') prevImage();
+      else if (e.key === 'Escape') closeLightbox();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [lightboxImage, lightboxIndex, lightboxImages]);
 
   const loadGalleries = async () => {
     setLoading(true);
@@ -64,29 +77,52 @@ export default function GalleryPublicPage() {
   const openLightbox = (images, index, title) => {
     setLightboxImages(images);
     setLightboxIndex(index);
-    setLightboxImage({ url: images[index].url, title });
+    setGalleryTitle(title);
+    const img = images[index];
+    setLightboxImage({
+      url: img.url,
+      name: img.name || '',
+      description: img.description || ''
+    });
   };
 
   const nextImage = () => {
     const newIndex = (lightboxIndex + 1) % lightboxImages.length;
     setLightboxIndex(newIndex);
-    setLightboxImage({ url: lightboxImages[newIndex].url, title: lightboxImage.title });
+    const img = lightboxImages[newIndex];
+    setLightboxImage({
+      url: img.url,
+      name: img.name || '',
+      description: img.description || ''
+    });
   };
 
   const prevImage = () => {
     const newIndex = (lightboxIndex - 1 + lightboxImages.length) % lightboxImages.length;
     setLightboxIndex(newIndex);
-    setLightboxImage({ url: lightboxImages[newIndex].url, title: lightboxImage.title });
+    const img = lightboxImages[newIndex];
+    setLightboxImage({
+      url: img.url,
+      name: img.name || '',
+      description: img.description || ''
+    });
   };
 
   const closeLightbox = () => {
     setLightboxImage(null);
     setLightboxImages([]);
     setLightboxIndex(0);
+    setGalleryTitle('');
   };
 
   const getTypeGalleries = (type) => {
     return galleries.filter(item => item.type === type);
+  };
+
+  // Get display title for lightbox
+  const getLightboxTitle = () => {
+    if (lightboxImage?.name) return lightboxImage.name;
+    return `${galleryTitle} - Image ${lightboxIndex + 1}`;
   };
 
   const tabs = [
@@ -96,7 +132,7 @@ export default function GalleryPublicPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Hero Section - Always visible */}
+      {/* Hero Section */}
       <OtherHeroSection title={'Gallery'} imageUrl={'/images/hero3.jpg'} />
 
       {/* Tabs */}
@@ -129,7 +165,6 @@ export default function GalleryPublicPage() {
       {/* Content */}
       <div className="max-w-7xl mx-auto px-4 py-12">
         {loading ? (
-          /* Loading State - Show skeleton */
           <TabContentSkeleton />
         ) : (
           tabs.map((tab) => {
@@ -168,18 +203,33 @@ export default function GalleryPublicPage() {
                               {item.images.map((image, imgIndex) => (
                                 <div 
                                   key={imgIndex} 
-                                  className="break-inside-avoid relative group cursor-pointer"
+                                  className="break-inside-avoid cursor-pointer"
                                   onClick={() => openLightbox(item.images, imgIndex, item.title)}
                                 >
-                                  <img
-                                    src={image.url}
-                                    alt={`${item.title} - ${imgIndex + 1}`}
-                                    className="w-full rounded-lg hover:opacity-90 transition-opacity"
-                                    loading="lazy"
-                                  />
-                                  <div className="absolute inset-0 hover:bg-black/50 bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300 rounded-lg flex items-center justify-center">
-                                    <ZoomIn className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity" />
+                                  {/* Image container */}
+                                  <div className="relative group">
+                                    <img
+                                      src={image.url}
+                                      alt={image.name || `${item.title} - ${imgIndex + 1}`}
+                                      className={`w-full hover:opacity-90 transition-opacity ${(image.name || image.description) ? 'rounded-t-lg' : 'rounded-lg'}`}
+                                      loading="lazy"
+                                    />
+                                    {/* Hover overlay with zoom icon */}
+                                    <div className={`absolute inset-0 bg-opacity-0 group-hover:bg-opacity-40 transition-all duration-300 flex items-center justify-center ${(image.name || image.description) ? 'rounded-t-lg' : 'rounded-lg'}`}>
+                                      <ZoomIn className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity" />
+                                    </div>
                                   </div>
+                                  {/* Image name and description - always visible below image */}
+                                  {(image.name || image.description) && (
+                                    <div className="bg-gray-100 p-3 rounded-b-lg border border-t-0 border-gray-200">
+                                      {image.name && (
+                                        <p className="text-gray-800 text-sm font-semibold">{image.name}</p>
+                                      )}
+                                      {image.description && (
+                                        <p className="text-gray-600 text-xs mt-1 line-clamp-3">{image.description}</p>
+                                      )}
+                                    </div>
+                                  )}
                                 </div>
                               ))}
                             </div>
@@ -198,7 +248,7 @@ export default function GalleryPublicPage() {
       {/* Lightbox Modal with Navigation */}
       {lightboxImage && (
         <div 
-          className="fixed inset-0 bg-black/70 bg-opacity-95 z-50 flex items-center justify-center p-4"
+          className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4"
           onClick={closeLightbox}
         >
           {/* Close Button */}
@@ -216,7 +266,7 @@ export default function GalleryPublicPage() {
                 e.stopPropagation();
                 prevImage();
               }}
-              className="absolute left-4 top-1/2 -translate-y-1/2 text-white hover:text-gray-300 transition-colors bg-black bg-opacity-50 rounded-full p-3 hover:bg-opacity-70 z-10"
+              className="absolute left-4 top-1/2 -translate-y-1/2 text-white hover:text-gray-300 transition-colors bg-black/50 rounded-full p-3 hover:bg-black/70 z-10"
             >
               <ChevronLeft className="w-8 h-8" />
             </button>
@@ -229,7 +279,7 @@ export default function GalleryPublicPage() {
                 e.stopPropagation();
                 nextImage();
               }}
-              className="absolute right-4 top-1/2 -translate-y-1/2 text-white hover:text-gray-300 transition-colors bg-black bg-opacity-50 rounded-full p-3 hover:bg-opacity-70 z-10"
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-white hover:text-gray-300 transition-colors bg-black/50 rounded-full p-3 hover:bg-black/70 z-10"
             >
               <ChevronRight className="w-8 h-8" />
             </button>
@@ -237,28 +287,45 @@ export default function GalleryPublicPage() {
 
           {/* Image Counter */}
           {lightboxImages.length > 1 && (
-            <div className="absolute top-4 left-1/2 -translate-x-1/2 text-white bg-black bg-opacity-50 px-4 py-2 rounded-full z-10">
+            <div className="absolute top-4 left-1/2 -translate-x-1/2 text-white bg-black/50 px-4 py-2 rounded-full z-10">
               {lightboxIndex + 1} / {lightboxImages.length}
             </div>
           )}
 
-          {/* Image */}
-          <div className="max-w-7xl max-h-[90vh] flex flex-col items-center">
+          {/* Image and Info Container */}
+          <div 
+            className="max-w-7xl max-h-[90vh] flex flex-col items-center"
+            onClick={(e) => e.stopPropagation()}
+          >
             <img
               src={lightboxImage.url}
-              alt={lightboxImage.title}
-              className="max-w-full max-h-[80vh] object-contain"
-              onClick={(e) => e.stopPropagation()}
+              alt={getLightboxTitle()}
+              className="max-w-full max-h-[70vh] object-contain rounded-lg"
             />
-            <p className="text-white text-lg mt-4 text-center font-medium">
-              {lightboxImage.title}
-            </p>
+            
+            {/* Image Title and Description */}
+            <div className="mt-4 text-center max-w-3xl px-4">
+              <p className="text-white text-xl font-semibold">
+                {getLightboxTitle()}
+              </p>
+              {lightboxImage.description && (
+                <p className="text-gray-300 text-base mt-2 leading-relaxed">
+                  {lightboxImage.description}
+                </p>
+              )}
+              {/* Show gallery name if image has custom name */}
+              {lightboxImage.name && (
+                <p className="text-gray-400 text-sm mt-3">
+                  From: {galleryTitle}
+                </p>
+              )}
+            </div>
           </div>
 
           {/* Keyboard Navigation Hint */}
           {lightboxImages.length > 1 && (
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white text-sm bg-black bg-opacity-50 px-4 py-2 rounded-full">
-              Use arrow keys to navigate
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white text-sm bg-black/50 px-4 py-2 rounded-full">
+              Use arrow keys to navigate • Press ESC to close
             </div>
           )}
         </div>

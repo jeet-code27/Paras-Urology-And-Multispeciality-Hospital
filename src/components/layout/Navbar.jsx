@@ -80,7 +80,7 @@ const Navigation = () => {
 
           <div className="flex items-center gap-3 lg:gap-4">
             <a
-              href="https://www.facebook.com/PUMHAJMER/"
+              href="https://www.facebook.com/ParasUrology"
               className="hover:text-blue-200 transition-colors"
               aria-label="Facebook"
               target="_blank"
@@ -297,7 +297,7 @@ const Navigation = () => {
                 </div>
                 <div className="flex items-center justify-center gap-4 mb-3">
                   <a
-                    href="https://www.facebook.com/PUMHAJMER/"
+                    href="https://www.facebook.com/ParasUrology"
                     className="text-blue-700 hover:text-blue-900 transition-colors"
                     aria-label="Facebook"
                     target="_blank"

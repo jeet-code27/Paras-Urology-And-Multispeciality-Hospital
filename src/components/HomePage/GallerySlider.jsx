@@ -35,9 +35,11 @@ export default function GallerySlider() {
   const openLightbox = (gallery, imageIndex) => {
     setCurrentGallery(gallery);
     setLightboxIndex(imageIndex);
+    const img = gallery.images[imageIndex];
     setLightboxImage({
-      url: gallery.images[imageIndex].url,
-      title: gallery.title,
+      url: img.url,
+      name: img.name || '',
+      galleryTitle: gallery.title,
       date: gallery.date,
     });
   };
@@ -46,9 +48,11 @@ export default function GallerySlider() {
     if (!currentGallery?.images) return;
     const newIndex = (lightboxIndex + 1) % currentGallery.images.length;
     setLightboxIndex(newIndex);
+    const img = currentGallery.images[newIndex];
     setLightboxImage({
-      url: currentGallery.images[newIndex].url,
-      title: currentGallery.title,
+      url: img.url,
+      name: img.name || '',
+      galleryTitle: currentGallery.title,
       date: currentGallery.date,
     });
   };
@@ -59,9 +63,11 @@ export default function GallerySlider() {
       (lightboxIndex - 1 + currentGallery.images.length) %
       currentGallery.images.length;
     setLightboxIndex(newIndex);
+    const img = currentGallery.images[newIndex];
     setLightboxImage({
-      url: currentGallery.images[newIndex].url,
-      title: currentGallery.title,
+      url: img.url,
+      name: img.name || '',
+      galleryTitle: currentGallery.title,
       date: currentGallery.date,
     });
   };
@@ -70,6 +76,12 @@ export default function GallerySlider() {
     setLightboxImage(null);
     setCurrentGallery(null);
     setLightboxIndex(0);
+  };
+
+  // Get display title for lightbox
+  const getLightboxTitle = () => {
+    if (lightboxImage?.name) return lightboxImage.name;
+    return `${lightboxImage?.galleryTitle} - Image ${lightboxIndex + 1}`;
   };
 
   const allImages = galleries.flatMap((gallery) =>
@@ -161,7 +173,7 @@ export default function GallerySlider() {
                     >
                       <img
                         src={image.url}
-                        alt={image.galleryTitle}
+                        alt={image.name || image.galleryTitle}
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                         onError={(e) => {
                           e.target.onerror = null;
@@ -171,19 +183,16 @@ export default function GallerySlider() {
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                         <div className="absolute bottom-0 left-0 right-0 p-3 md:p-4 text-white">
+                          {/* Show image name if available, otherwise show gallery title */}
                           <p className="text-xs md:text-sm font-semibold line-clamp-2">
-                            {image.galleryTitle}
+                            {image.name || image.galleryTitle}
                           </p>
-                          <p className="text-[10px] md:text-xs text-gray-300 mt-1">
-                            {new Date(image.galleryDate).toLocaleDateString(
-                              'en-IN',
-                              {
-                                year: 'numeric',
-                                month: 'short',
-                                day: 'numeric',
-                              }
-                            )}
-                          </p>
+                          {/* Show gallery title below if image has its own name */}
+                          {image.name && (
+                            <p className="text-[10px] md:text-xs text-gray-300 mt-1">
+                              {image.galleryTitle}
+                            </p>
+                          )}
                         </div>
                       </div>
                       <button
@@ -271,21 +280,21 @@ export default function GallerySlider() {
           <div className="max-w-7xl max-h-[90vh] flex flex-col items-center">
             <img
               src={lightboxImage.url}
-              alt={lightboxImage.title}
+              alt={getLightboxTitle()}
               className="max-w-full max-h-[80vh] object-contain"
               onClick={(e) => e.stopPropagation()}
             />
             <div className="text-center mt-4 px-4">
-              <p className="text-white text-lg font-medium">
-                {lightboxImage.title}
+              {/* Show image name as main title */}
+              <p className="text-white text-xl font-semibold">
+                {getLightboxTitle()}
               </p>
-              <p className="text-gray-300 text-sm mt-1">
-                {new Date(lightboxImage.date).toLocaleDateString('en-IN', {
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric',
-                })}
-              </p>
+              {/* Show gallery title if image has custom name */}
+              {lightboxImage.name && (
+                <p className="text-gray-400 text-sm mt-2">
+                  From: {lightboxImage.galleryTitle}
+                </p>
+              )}
             </div>
           </div>
         </div>
