@@ -119,11 +119,11 @@ export default function Footer() {
                 <span className="text-sm">0145-2941941</span>
               </a>
               <a
-                href="tel:2942942"
+                href="tel:0145-2942942"
                 className="flex items-start gap-3 text-blue-100 hover:text-yellow-400 transition-colors duration-300"
               >
                 <Phone className="w-5 h-5 mt-0.5 text-yellow-400" />
-                <span className="text-sm">2942942</span>
+                <span className="text-sm">0145-2942942</span>
               </a>
               <a
                 href="mailto:parasurologyhospital@gmail.com"
@@ -166,21 +166,7 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Disclaimer */}
-      <div className="bg-blue-950/70 border-t border-blue-800/50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
-          <div className="flex items-start gap-3 text-yellow-300 text-xs sm:text-sm leading-relaxed">
-            <span className="text-lg font-bold">⚠</span>
-            <p>
-              <span className="font-semibold">Disclaimer:</span> Information on
-              this website is for educational purposes only and not a
-              replacement for professional medical advice. Please consult a
-              doctor before making healthcare decisions.
-            </p>
-          </div>
-        </div>
-      </div>
-
+     
       {/* Copyright */}
       <div className="bg-blue-950 border-t border-blue-800/60 text-center py-4">
         <p className="text-sm text-blue-200">
