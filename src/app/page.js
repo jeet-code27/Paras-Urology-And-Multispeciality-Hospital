@@ -2,6 +2,7 @@ import AboutSection from "@/components/HomePage/AboutSection";
 import DepartmentsSlider from "@/components/HomePage/DepartmentsSlider";
 import DoctorsSlider from "@/components/HomePage/DoctorSlider";
 import DoctorsProfile from "@/components/HomePage/DoctorsProfile";
+import ElfsightWidget from "@/components/HomePage/ElfsightWidget";
 import EmpanelmentsSlider from "@/components/HomePage/EmpanelmentsSlider";
 import GallerySlider from "@/components/HomePage/GallerySlider";
 import HeroSection from "@/components/HomePage/HeroSection";
@@ -25,7 +26,7 @@ export default function Home() {
     <HospitalAppointment/>
     </div>
     <DoctorsProfile/>
-    
+    <ElfsightWidget/>
    </main>
   );
 }
