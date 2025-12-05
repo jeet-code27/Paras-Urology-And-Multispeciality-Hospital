@@ -197,7 +197,7 @@ export default function EmpanelmentsPage() {
               viewport={{ once: true, amount: 0.3 }}
               className="text-center py-8"
             >
-              <p className="text-2xl font-bold text-gray-800">
+              <p className="text-4xl font-bold text-gray-800">
                 And all other leading TPAs and Health Insurances
               </p>
             </motion.div>
