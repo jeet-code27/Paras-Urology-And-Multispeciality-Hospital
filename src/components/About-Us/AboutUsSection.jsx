@@ -82,7 +82,7 @@ export default function AboutUsSection() {
                 We are committed to provide high-quality medical services in the field of different branches of medicine. We focus on prompt diagnosis, standardized medical care with advanced medical technology, and efficient staff leading to a happy and healthy discharge to home.
               </motion.p>
               <motion.p variants={itemVariants}>
-                PUMH is an offshoot of Raj Uro Care Centre, which has a successful track record of over 10,000 urological procedures under the able guidance of Dr. Rajkumar Khasgiwala. Our motto is to provide quality health care services as a Multispeciality Hospital with all leading branches of medicine like Urology, Nephrology, General Surgery, Laparoscopic & Laser Surgery, General Medicine, Orthopedics, Gynecology, Pediatrics, Neuro Surgery, Oncology, Dietetics & Physiotherapy.
+                PUMH is an offshoot of Raj Uro Care Centre, which has a successful track record of over 20,000 urological procedures under the able guidance of Dr. Rajkumar Khasgiwala. Our motto is to provide quality health care services as a Multispeciality Hospital with all leading branches of medicine like Urology, Nephrology, General Surgery, Laparoscopic & Laser Surgery, General Medicine, Orthopedics, Gynecology, Pediatrics, Neuro Surgery, Oncology, Dietetics & Physiotherapy.
               </motion.p>
             </motion.div>
 

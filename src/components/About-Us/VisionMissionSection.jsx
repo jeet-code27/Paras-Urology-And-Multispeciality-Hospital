@@ -1,6 +1,7 @@
 'use client';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import Link from 'next/link';
 
 export default function VisionMissionSection() {
   const containerVariants = {
@@ -51,7 +52,7 @@ export default function VisionMissionSection() {
           variants={containerVariants}
         >
           
-          {/* Left Side - Vision, Mission & Values */}
+          {/* Left Side - Vision, Mission, Quality Policy & Values */}
           <motion.div 
             className="space-y-8"
             variants={containerVariants}
@@ -66,7 +67,7 @@ export default function VisionMissionSection() {
                 className="text-gray-700 leading-relaxed text-justify"
                 variants={itemVariants}
               >
-                To be a leading multispeciality healthcare provider, delivering world-class medical services with compassion and excellence, while making quality healthcare accessible to all.
+                To promote & provide modern, cost effective medical and health facilities in the field of Urology & Nephrology.
               </motion.p>
             </motion.div>
 
@@ -79,7 +80,20 @@ export default function VisionMissionSection() {
                 className="text-gray-700 leading-relaxed text-justify"
                 variants={itemVariants}
               >
-                To provide high-quality medical services through prompt diagnosis, standardized medical care with advanced medical technology, and efficient staff, ensuring a happy and healthy discharge to home for every patient.
+                To establish a Healthy Society, where no one remains ill & ignorant about disease hence leading to economic growth of the society.
+              </motion.p>
+            </motion.div>
+
+            {/* Quality Policy */}
+            <motion.div variants={itemVariants}>
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                Quality Policy
+              </h2>
+              <motion.p 
+                className="text-gray-700 leading-relaxed text-justify"
+                variants={itemVariants}
+              >
+                Organization quality is based on the belief that people should be educated to lead a healthy lifestyle and take regular medical checkups to treat any upcoming diseases to avoid loss of man hours due to hospitalization and hold the disease in treatable stage.
               </motion.p>
             </motion.div>
 
@@ -95,8 +109,7 @@ export default function VisionMissionSection() {
                 >
                   <span className="text-blue-600 font-bold">•</span>
                   <div>
-                    <span className="font-bold text-gray-900">Patient Centric:</span>
-                    <span className="text-gray-700"> Putting the individual patient and their family at the center of our mission is our utmost priority.</span>
+                    <span className="font-bold text-gray-900">Timeliness of care</span>
                   </div>
                 </motion.li>
                 <motion.li 
@@ -105,8 +118,7 @@ export default function VisionMissionSection() {
                 >
                   <span className="text-blue-600 font-bold">•</span>
                   <div>
-                    <span className="font-bold text-gray-900">Excellence:</span>
-                    <span className="text-gray-700"> Striving for world-class standards in everything we do, from skill and technology to programs and services.</span>
+                    <span className="font-bold text-gray-900">Openness in communication</span>
                   </div>
                 </motion.li>
                 <motion.li 
@@ -115,38 +127,7 @@ export default function VisionMissionSection() {
                 >
                   <span className="text-blue-600 font-bold">•</span>
                   <div>
-                    <span className="font-bold text-gray-900">Integrity:</span>
-                    <span className="text-gray-700"> We uphold an unwavering code of ethics, prioritizing complete honesty, transparency, and sincerity.</span>
-                  </div>
-                </motion.li>
-                <motion.li 
-                  className="flex gap-3"
-                  variants={itemVariants}
-                >
-                  <span className="text-blue-600 font-bold">•</span>
-                  <div>
-                    <span className="font-bold text-gray-900">Compassion:</span>
-                    <span className="text-gray-700"> We warmly welcome everyone with kindness and dedication to their health and well-being.</span>
-                  </div>
-                </motion.li>
-                <motion.li 
-                  className="flex gap-3"
-                  variants={itemVariants}
-                >
-                  <span className="text-blue-600 font-bold">•</span>
-                  <div>
-                    <span className="font-bold text-gray-900">Accountability:</span>
-                    <span className="text-gray-700"> Taking full ownership of our work and being responsible for the services we provide.</span>
-                  </div>
-                </motion.li>
-                <motion.li 
-                  className="flex gap-3"
-                  variants={itemVariants}
-                >
-                  <span className="text-blue-600 font-bold">•</span>
-                  <div>
-                    <span className="font-bold text-gray-900">Teamwork:</span>
-                    <span className="text-gray-700"> Building system effectiveness through the collective strength and cultural diversity of everyone, fostering open communication.</span>
+                    <span className="font-bold text-gray-900">Transparency and ethical delivery of care</span>
                   </div>
                 </motion.li>
               </motion.ul>
@@ -154,6 +135,7 @@ export default function VisionMissionSection() {
 
             {/* Book Appointment Button */}
             <motion.div variants={itemVariants}>
+              <Link href="/book-appointment">
               <motion.button 
                 className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-8 rounded transition-colors duration-300"
                 whileHover={{ scale: 1.05 }}
@@ -161,6 +143,7 @@ export default function VisionMissionSection() {
               >
                 Book Appointment
               </motion.button>
+              </Link>
             </motion.div>
 
           </motion.div>
@@ -174,7 +157,7 @@ export default function VisionMissionSection() {
               className="grid grid-cols-2 gap-4"
               variants={containerVariants}
             >
-              {/* Top Left - 33 Years Badge with Surgery Image */}
+              {/* Top Left - Billing Counter */}
               <motion.div 
                 className="relative h-64 rounded-lg overflow-hidden shadow-lg"
                 variants={itemVariants}
@@ -182,22 +165,13 @@ export default function VisionMissionSection() {
               >
                 <Image
                   src="/images/billing-counter.jpg"
-                  alt="Billing Counter  "
+                  alt="Billing Counter"
                   fill
                   className="object-cover"
                 />
-                {/* <div className="absolute top-4 left-4 w-20 h-20">
-                  <Image
-                    src="/images/33-years-badge.png"
-                    alt="33 Years"
-                    width={80}
-                    height={80}
-                    className="object-contain"
-                  />
-                </div> */}
               </motion.div>
 
-              {/* Top Right - Hospital Facility */}
+              {/* Top Right - General Ward */}
               <motion.div 
                 className="relative h-64 rounded-lg overflow-hidden shadow-lg"
                 variants={itemVariants}
@@ -205,7 +179,7 @@ export default function VisionMissionSection() {
               >
                 <Image
                   src="/images/general-ward.jpg"
-                  alt="Hospital Facility"
+                  alt="General Ward"
                   fill
                   className="object-cover"
                 />

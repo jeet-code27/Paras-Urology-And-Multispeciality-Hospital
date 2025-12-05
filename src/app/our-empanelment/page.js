@@ -188,6 +188,19 @@ export default function EmpanelmentsPage() {
                 </motion.div>
               );
             })}
+            
+            {/* Additional text line at the end */}
+            <motion.div
+              variants={fadeInUp}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, amount: 0.3 }}
+              className="text-center py-8"
+            >
+              <p className="text-2xl font-bold text-gray-800">
+                And all other leading TPAs and Health Insurances
+              </p>
+            </motion.div>
           </div>
         )}
 
