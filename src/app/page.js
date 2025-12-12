@@ -9,24 +9,26 @@ import HeroSection from "@/components/HomePage/HeroSection";
 import HospitalAppointment from "@/components/HomePage/HospitalAppointment";
 import StatsSection from "@/components/HomePage/StatsSection";
 import Marquee from "@/components/layout/Marqee";
+import PopupModal from "@/components/HomePage/PopupModal";
 
 
 export default function Home() {
   return (
-   <main>
-    <HeroSection />
-    <Marquee />
-    <StatsSection/>
-    <AboutSection/>
-    <DepartmentsSlider/>
-    <DoctorsSlider/>
-    <EmpanelmentsSlider/>
-    <GallerySlider/>
-    <div className="pb-10 bg-white">
-    <HospitalAppointment/>
-    </div>
-    <DoctorsProfile/>
-    <ElfsightWidget/>
-   </main>
+    <main>
+      <HeroSection />
+      <Marquee />
+      <StatsSection />
+      <AboutSection />
+      <DepartmentsSlider />
+      <DoctorsSlider />
+      <EmpanelmentsSlider />
+      <GallerySlider />
+      <div className="pb-10 bg-white">
+        <HospitalAppointment />
+      </div>
+      <DoctorsProfile />
+      <ElfsightWidget />
+      <PopupModal />
+    </main>
   );
 }
